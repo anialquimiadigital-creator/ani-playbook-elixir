@@ -23,6 +23,9 @@ Método PGA e a Constelação de Mentores (reapresentada como **os Sete Elementa
 **Playbook publicado (artefato Claude):**
 https://claude.ai/code/artifact/5ed263e2-59fa-4ca1-887a-a9b6abb0d824
 
+**Engenharia reversa dos 3 perfis (artefato Claude):**
+https://claude.ai/code/artifact/ad6c8f91-620c-4f03-bc5a-08331ca7a791
+
 ---
 
 ## 🧭 A tese em uma frase
