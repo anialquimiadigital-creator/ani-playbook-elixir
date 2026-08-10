@@ -1,0 +1,480 @@
+<title>O Elixir — Playbook de Experiência · ANi | Alquimia Digital</title>
+<style>
+  :root{
+    --ground:#F1E7D2; --ground-2:#E9DCBF; --card:#F6EEDD;
+    --ink:#241C22; --ink-soft:#5C5049; --ink-faint:#877A6C;
+    --gold:#9C6E15; --gold-bright:#B98A24; --gold-leaf:#C9A24B;
+    --verdigris:#2C6C63; --copper:#AC4E24; --navy:#12365A;
+    --line:rgba(36,28,34,.14); --line-strong:rgba(36,28,34,.28);
+    --shadow:0 1px 0 rgba(255,255,255,.5) inset, 0 18px 40px -28px rgba(36,28,34,.5);
+    --ff-display:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --ff-body:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --ff-mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#14101A; --ground-2:#1B1622; --card:#201A29;
+      --ink:#EADFC7; --ink-soft:#B4A78F; --ink-faint:#8A7D68;
+      --gold:#C9A24B; --gold-bright:#E0BB63; --gold-leaf:#E7C877;
+      --verdigris:#5CB0A1; --copper:#DA8250; --navy:#7FB6E6;
+      --line:rgba(233,223,201,.14); --line-strong:rgba(233,223,201,.26);
+      --shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 24px 50px -30px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#14101A; --ground-2:#1B1622; --card:#201A29;
+    --ink:#EADFC7; --ink-soft:#B4A78F; --ink-faint:#8A7D68;
+    --gold:#C9A24B; --gold-bright:#E0BB63; --gold-leaf:#E7C877;
+    --verdigris:#5CB0A1; --copper:#DA8250; --navy:#7FB6E6;
+    --line:rgba(233,223,201,.14); --line-strong:rgba(233,223,201,.26);
+    --shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 24px 50px -30px rgba(0,0,0,.8);
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--ff-body); font-size:17px; line-height:1.65;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px}
+  .prose{max-width:66ch}
+  p{margin:0 0 1em}
+  a{color:var(--gold); text-decoration:none; border-bottom:1px solid var(--line-strong)}
+  a:hover{color:var(--gold-bright)}
+  h1,h2,h3{font-family:var(--ff-display); font-weight:600; text-wrap:balance; line-height:1.12; margin:0}
+  .eyebrow{font-family:var(--ff-mono); font-size:.72rem; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); margin:0 0 1rem}
+  .sym{font-family:"Segoe UI Symbol","Apple Symbols",var(--ff-body)}
+
+  .topbar{position:sticky; top:0; z-index:20; backdrop-filter:blur(8px);
+    background:color-mix(in srgb, var(--ground) 86%, transparent);
+    border-bottom:1px solid var(--line)}
+  .topbar .wrap{display:flex; align-items:center; justify-content:space-between; height:56px}
+  .brand{font-family:var(--ff-mono); font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft)}
+  .brand b{color:var(--gold); font-weight:600}
+  .toggle{font-family:var(--ff-mono); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-soft); background:transparent; border:1px solid var(--line-strong);
+    border-radius:999px; padding:.4rem .8rem; cursor:pointer}
+  .toggle:hover{color:var(--gold); border-color:var(--gold)}
+
+  .hero{position:relative; padding:clamp(3.5rem,9vw,7rem) 0 clamp(2.5rem,5vw,4rem); overflow:hidden}
+  .hero .glow{position:absolute; inset:auto 0 0 0; height:520px; pointer-events:none; z-index:0;
+    background:radial-gradient(60% 120% at 78% 8%, color-mix(in srgb,var(--gold-leaf) 26%,transparent), transparent 60%);
+    opacity:.5}
+  .hero .wrap{position:relative; z-index:1}
+  .hero h1{font-size:clamp(2.5rem,6.2vw,4.7rem); letter-spacing:-.01em}
+  .hero h1 em{font-style:italic; color:var(--gold)}
+  .lede{font-family:var(--ff-display); font-size:clamp(1.12rem,2.2vw,1.42rem); color:var(--ink-soft); max-width:40ch; margin-top:1.4rem}
+  .lede b{color:var(--ink)}
+  .kicker{display:inline-flex; align-items:center; gap:.6rem; font-family:var(--ff-mono);
+    font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft);
+    border:1px solid var(--line-strong); border-radius:999px; padding:.45rem .9rem; margin-bottom:1.8rem}
+  .kicker .dot{width:7px; height:7px; border-radius:50%; background:var(--gold); box-shadow:0 0 12px var(--gold)}
+
+  .transmute{display:flex; flex-wrap:wrap; align-items:center; gap:clamp(.8rem,3vw,2rem); margin-top:2.6rem;
+    padding:1.4rem 1.6rem; border:1px solid var(--line); border-radius:16px; background:var(--card); box-shadow:var(--shadow)}
+  .transmute .node{display:flex; flex-direction:column; gap:.15rem}
+  .transmute .node .t{font-family:var(--ff-display); font-size:1.45rem}
+  .transmute .node .s{font-family:var(--ff-mono); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint)}
+  .transmute .lead-c{color:var(--ink-soft)} .transmute .gold-c{color:var(--gold)} .transmute .verd-c{color:var(--verdigris)}
+  .transmute .arrow{flex:1; min-width:70px; height:1px; position:relative; background:linear-gradient(90deg,var(--ink-faint),var(--gold))}
+  .transmute .arrow::after{content:"→"; position:absolute; right:-4px; top:-.85em; color:var(--gold); font-size:1.1rem}
+
+  section{padding:clamp(3rem,6vw,5.5rem) 0; border-top:1px solid var(--line)}
+  .sec-head{display:flex; align-items:baseline; gap:1rem; margin-bottom:2.2rem}
+  .sec-head .num{font-family:var(--ff-mono); font-size:.78rem; color:var(--gold); letter-spacing:.1em; padding-top:.35rem}
+  .sec-head h2{font-size:clamp(1.7rem,3.6vw,2.6rem)}
+  .sec-intro{max-width:62ch; color:var(--ink-soft); font-size:1.05rem}
+
+  .law{border-left:3px solid var(--gold); padding:.2rem 0 .2rem 1.2rem; margin:1.6rem 0; font-family:var(--ff-display);
+    font-size:1.2rem; font-style:italic; color:var(--ink)}
+  .law span{display:block; font-family:var(--ff-mono); font-style:normal; font-size:.66rem; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-faint); margin-top:.5rem}
+
+  .world{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px}
+  .span-all{grid-column:1/-1}
+  .stone{background:radial-gradient(120% 160% at 12% 0%, color-mix(in srgb,var(--gold-leaf) 16%,transparent), transparent 55%), var(--card)}
+  .cell{border:1px solid var(--line); border-radius:14px; padding:1.4rem 1.4rem 1.5rem; background:var(--card); box-shadow:var(--shadow)}
+  .cell .glyph{font-size:1.5rem; color:var(--gold); line-height:1}
+  .cell h3{font-size:1.24rem; margin:.7rem 0 .1rem}
+  .cell .role{font-family:var(--ff-mono); font-size:.64rem; letter-spacing:.13em; text-transform:uppercase; color:var(--verdigris); margin-bottom:.7rem}
+  .cell p{font-size:.94rem; color:var(--ink-soft); margin:0}
+
+  /* two-tier fit map */
+  .tier{border:1px solid var(--line); border-radius:16px; background:var(--card); padding:1.5rem 1.6rem; box-shadow:var(--shadow)}
+  .tier + .tier{margin-top:14px}
+  .tier .lbl{font-family:var(--ff-mono); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; margin-bottom:.9rem}
+  .tier.house .lbl{color:var(--navy)} .tier.door .lbl{color:var(--gold)}
+  .tier h3{font-size:1.3rem; margin-bottom:.3rem}
+  .tier p{color:var(--ink-soft); font-size:.98rem; margin:.4rem 0 0; max-width:64ch}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:1rem}
+  .chip{font-family:var(--ff-mono); font-size:.72rem; letter-spacing:.04em; border:1px solid var(--line-strong);
+    border-radius:999px; padding:.35rem .75rem; color:var(--ink-soft)}
+  .tier.door .chip{border-color:color-mix(in srgb,var(--gold) 50%,var(--line)); color:var(--gold)}
+  .connector{text-align:center; font-family:var(--ff-mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-faint); padding:.6rem 0}
+
+  .scroll{overflow-x:auto; border:1px solid var(--line); border-radius:14px; background:var(--card)}
+  table{border-collapse:collapse; width:100%; min-width:640px; font-size:.95rem}
+  thead th{font-family:var(--ff-mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; text-align:left;
+    color:var(--ink-faint); padding:1rem 1.2rem; border-bottom:1px solid var(--line-strong); font-weight:500}
+  tbody td{padding:.95rem 1.2rem; border-bottom:1px solid var(--line); vertical-align:top}
+  tbody tr:last-child td{border-bottom:none}
+  .t-elem tbody td:first-child{color:var(--gold); font-family:var(--ff-display); font-size:1.08rem; white-space:nowrap}
+  .t-elem tbody td:nth-child(2){color:var(--ink); font-weight:600; white-space:nowrap}
+  .t-elem tbody td:last-child{color:var(--ink-soft)}
+  .t-pga tbody td:first-child{width:34%}
+  .t-pga tbody td:first-child b{color:var(--gold)}
+  .t-pga tbody td:first-child span{display:block; font-family:var(--ff-mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--verdigris); margin-top:.2rem}
+  .t-pga tbody td:last-child{color:var(--ink-soft)}
+  .t-pga tbody td:last-child b{color:var(--ink)}
+  .t-aula tbody td:first-child{color:var(--ink-soft); width:38%} .t-aula tbody td:first-child b{color:var(--gold)}
+  .t-aula tbody td:last-child b{color:var(--ink)}
+
+  .cluster{margin-top:2rem}
+  .cluster h3{font-family:var(--ff-mono); font-weight:500; text-transform:uppercase; color:var(--gold);
+    font-size:.8rem; letter-spacing:.14em; margin-bottom:1rem; display:flex; align-items:center; gap:.6rem}
+  .cluster h3::before{content:""; width:22px; height:1px; background:var(--gold)}
+  .ideas{display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:14px}
+  .idea{border:1px solid var(--line); border-radius:12px; padding:1.05rem 1.15rem; background:var(--card)}
+  .idea .n{font-family:var(--ff-mono); font-size:.66rem; color:var(--ink-faint); letter-spacing:.1em}
+  .idea h4{font-family:var(--ff-display); font-size:1.1rem; font-weight:600; margin:.3rem 0 .4rem}
+  .idea p{font-size:.89rem; color:var(--ink-soft); margin:0}
+  .idea p .hi{color:var(--gold); font-weight:600}
+
+  .feature{background:radial-gradient(90% 120% at 85% 10%, color-mix(in srgb,var(--verdigris) 16%,transparent), transparent 55%), var(--card);
+    border:1px solid var(--line); border-radius:18px; padding:clamp(1.6rem,4vw,2.6rem); box-shadow:var(--shadow)}
+  .feature .diary{font-family:var(--ff-mono); font-size:.88rem; line-height:1.7; background:color-mix(in srgb,var(--ink) 5%,var(--ground));
+    border:1px solid var(--line); border-radius:12px; padding:1.2rem 1.3rem; margin-top:1.4rem; color:var(--ink-soft)}
+  .feature .diary b{color:var(--verdigris)} .feature .diary .sig{color:var(--gold)}
+
+  .plan{display:grid; gap:14px}
+  .phase{display:grid; grid-template-columns:minmax(92px,116px) 1fr; gap:1.2rem; align-items:start;
+    border:1px solid var(--line); border-radius:12px; padding:1.2rem 1.3rem; background:var(--card)}
+  .phase .days{font-family:var(--ff-mono); font-size:.72rem; letter-spacing:.06em; color:var(--gold); padding-top:.15rem}
+  .phase .days b{display:block; font-size:1.4rem; color:var(--ink); letter-spacing:-.02em}
+  .phase h3{font-size:1.16rem}
+  .phase .tag{font-family:var(--ff-mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--verdigris)}
+  .phase p{font-size:.93rem; color:var(--ink-soft); margin:.35rem 0 0; max-width:64ch}
+  .phase ul{margin:.6rem 0 0; padding-left:1.1rem; font-size:.9rem; color:var(--ink-soft)}
+  .phase li{margin:.25rem 0}
+
+  .guard{border:1px solid color-mix(in srgb,var(--copper) 40%,var(--line)); border-radius:14px; background:var(--card);
+    padding:1.5rem 1.6rem}
+  .guard h3{font-size:1.15rem; color:var(--copper); margin-bottom:.8rem}
+  .guard ul{margin:0; padding-left:1.1rem; color:var(--ink-soft); font-size:.96rem}
+  .guard li{margin:.4rem 0}
+  .guard li b{color:var(--ink)}
+
+  .lawgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin-top:1.5rem}
+  .lawcard{border:1px solid var(--line); border-radius:12px; padding:1.2rem; background:var(--card); font-family:var(--ff-display);
+    font-style:italic; font-size:1.05rem; color:var(--ink)}
+  .lawcard b{display:block; font-family:var(--ff-mono); font-style:normal; font-size:.62rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:.6rem}
+
+  footer{border-top:1px solid var(--line); padding:3rem 0 4rem; color:var(--ink-soft)}
+  footer .wrap{display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:space-between; align-items:baseline}
+  footer .fnote{font-family:var(--ff-mono); font-size:.68rem; letter-spacing:.08em; color:var(--ink-faint); max-width:48ch}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease}
+  .reveal.in{opacity:1; transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none}}
+  :focus-visible{outline:2px solid var(--gold); outline-offset:3px; border-radius:4px}
+  @media (max-width:560px){ .phase{grid-template-columns:1fr} .phase .days b{font-size:1.2rem} }
+</style>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="brand">ANi · Alquimia Digital · <b>Playbook</b></span>
+    <button class="toggle" id="tgl" aria-label="Alternar tema">Tema</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="kicker"><span class="dot"></span> Viralização Máxima × Código SERVIR × Método PGA</span>
+    <h1>Transformar <em>chumbo</em> em <em>ouro</em> — e fazer o cliente querer contar pra alguém.</h1>
+    <p class="lede"><b>O Elixir</b> é o produto-âncora da ANi: capta leads, cuida do CRM e faz o negócio brilhar no Google — entregue como <b>experiência</b>, não como mais uma automação. A porta de entrada viral para o Método PGA.</p>
+
+    <div class="transmute" aria-hidden="true">
+      <div class="node"><span class="t lead-c sym">🜪 Chumbo</span><span class="s">Lead frio · gargalo invisível</span></div>
+      <div class="arrow"></div>
+      <div class="node"><span class="t verd-c sym">☿ Transmutação</span><span class="s">Método PGA · os Elementais</span></div>
+      <div class="arrow"></div>
+      <div class="node"><span class="t gold-c sym">🜚 Ouro</span><span class="s">Cliente fiel · que indica</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section id="tese">
+  <div class="wrap prose reveal">
+    <div class="sec-head"><span class="num">01</span><h2>O problema não é a automação. É a entrega dela.</h2></div>
+    <p>99% das agências de IA entregam a mesma coisa: um vídeo de Loom explicando o fluxo, um print do fluxograma, uma fatura em PDF e um <em>"qualquer dúvida me chama"</em>. É o <b>álcool gel em cima da mesa</b> de que o Will Weber fala — todo mundo tem, ninguém fotografa, ninguém indica.</p>
+    <p>Sua Arquitetura de Marca já tem a <b>substância</b>: Código SERVIR, Método PGA, Constelação. O que faltava era a <b>camada de experiência</b> — a forma de entregar essa substância de um jeito que o cliente precise registrar e compartilhar. É isso que este playbook adiciona.</p>
+    <p class="law">Não é mágica. É a combinação intencional de diagnóstico, gestão, processos, tecnologia e responsabilidade.<span>Sua Arquitetura de Marca · Alquimia Operacional</span></p>
+    <p>Guardo essa frase como bússola. A alquimia aqui é <b>ofício de laboratório</b>, não ocultismo — transmutação, elementos, fórmula, bancada. Tudo teatro honesto (Código SERVIR: <b>Verdade</b>), nunca promessa mística. O "uau" é real porque a máquina por trás é real.</p>
+  </div>
+</section>
+
+<section id="encaixe">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="num">02</span><h2>O encaixe: onde O Elixir mora dentro da ANi</h2></div>
+    <p class="sec-intro">O Elixir não é um serviço solto nem concorre com a sua consultoria. Ele é a <b>porta de entrada viral</b> — o produto-âncora do Will Weber (Aula 3: comum, replicável, alta margem, eficiente) que prova a Alquimia Operacional na prática e conduz ao Método PGA completo.</p>
+
+    <div style="margin-top:1.8rem">
+      <div class="tier house">
+        <div class="lbl">A casa · o que já existe</div>
+        <h3>ANi | Alquimia Digital</h3>
+        <p>A consultoria de orquestração para PMEs. Aqui vive toda a substância: a filosofia, o método autoral e a equipe de agentes. É o que sustenta a confiança e a recompra.</p>
+        <div class="chips"><span class="chip">Código SERVIR</span><span class="chip">Método PGA</span><span class="chip">Constelação → Elementais</span><span class="chip">Consultoria completa</span></div>
+      </div>
+      <div class="connector sym">↑ conduz para dentro da casa ↑</div>
+      <div class="tier door">
+        <div class="lbl">A porta de entrada · o que estamos criando</div>
+        <h3>O Elixir — o produto-âncora</h3>
+        <p>Uma oferta única, fácil de replicar e impossível de esquecer: leads + CRM + Google Meu Negócio + auto-otimização. Barata de entregar, alta em percepção de valor, desenhada para viralizar. É o "ovo de dragão" da ANi.</p>
+        <div class="chips"><span class="chip">A Caça · leads</span><span class="chip">O Compêndio · CRM</span><span class="chip">O Farol · Google</span><span class="chip">A Pedra · auto-otimização</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="elementais">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="num">03</span><h2>Os Elementais: a Constelação com pele comercial</h2></div>
+    <p class="sec-intro">Sua regra de marca é clara: <em>não usar espiritualidade como promessa comercial</em> — e a origem dos mentores "aprofunda a história, mas não precisa ser a primeira explicação". Solução: o nome humano continua sendo a alma interna; a <b>persona pública de cada agente vira um Elemental</b> — força da natureza, não santo. É o personagem viral do Will Weber (o dragão Hector), sem peso espiritual e 100% dentro do território Alquimia.</p>
+
+    <div class="scroll" style="margin-top:1.8rem">
+      <table class="t-elem">
+        <thead><tr><th>Elemental · público</th><th>Mentor · interno</th><th>Domínio</th></tr></thead>
+        <tbody>
+          <tr><td><span class="sym">✧</span> Éter</td><td>Mariá</td><td>Orquestração, memória e relacionamento — a quintessência que conecta os quatro elementos.</td></tr>
+          <tr><td><span class="sym">🜂</span> Fogo</td><td>Leopoldina</td><td>Marketing, conteúdo e campanhas — o que inflama, aquece e espalha.</td></tr>
+          <tr><td><span class="sym">🜄</span> Água</td><td>Levi</td><td>Automação, integrações e hub central — o fluxo que liga todos os sistemas.</td></tr>
+          <tr><td><span class="sym">🜁</span> Ar</td><td>Grégory</td><td>Pesquisa e monitoramento — vê longe, sentinela, sempre desperto.</td></tr>
+          <tr><td><span class="sym">🜃</span> Terra</td><td>Dr. Alfredo</td><td>Diagnóstico e estratégia — o alicerce, o que é sólido e sustenta a decisão.</td></tr>
+          <tr><td><span class="sym">☿</span> Mercúrio</td><td>Tulibã</td><td>Pesquisa acadêmica e curadoria — o mensageiro do conhecimento, em movimento.</td></tr>
+          <tr><td><span class="sym">🜔</span> Sal</td><td>Geremias</td><td>Análise crítica e antecipação — cristaliza padrões e revela o que vem a seguir.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sec-intro" style="margin-top:1.4rem">7 agentes → 7 elementos alquímicos. Cada Elemental é visualmente inconfundível (mascote), o que os torna <b>Instagramáveis</b>: dá pra ilustrar, animar, dar voz e transformar em conteúdo. A "Constelação" pode virar <b>"os Sete Elementais"</b> na comunicação — você decide se mantém as duas camadas ou funde.</p>
+  </div>
+</section>
+
+<section id="pga">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="num">04</span><h2>Método PGA, entregue como experiência</h2></div>
+    <p class="sec-intro">Aqui os dois materiais se fundem. Cada etapa do seu método vira um <b>momento-uau fotografável</b>. O PGA continua sendo o motor (a substância); a experiência é só a forma como cada passo é revelado. E — respeitando a sua regra — o <b>problema e o resultado vêm primeiro</b> (Perceber), os Elementais só entram na etapa 4.</p>
+
+    <div class="scroll" style="margin-top:1.8rem">
+      <table class="t-pga">
+        <thead><tr><th>Etapa do Método PGA</th><th>O momento-uau na entrega</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. Perceber</b><span>diagnóstico</span></td><td><b>O Diagnóstico que dói de tão certeiro.</b> Você devolve o gargalo invisível em uma imagem única — o cliente sente que finalmente alguém enxergou o problema dele.</td></tr>
+          <tr><td><b>2. Governar</b><span>regras e limites</span></td><td><b>As Regras do Jogo.</b> Mostrar limites, autonomia e supervisão de forma transparente (Código SERVIR: Responsabilidade) já é um diferencial — ninguém no mercado faz isso com clareza.</td></tr>
+          <tr><td><b>3. Arquitetar</b><span>desenho do futuro</span></td><td><b>A Planta Revelada.</b> O novo fluxo apresentado como um mapa vivo do "antes → depois". O cliente vê o próprio negócio redesenhado.</td></tr>
+          <tr><td><b>4. Agenciar</b><span>os agentes nascem</span></td><td><b>Os Elementais Assumem.</b> Aqui os personagens entram: cada Elemental é "ativado" com missão e nome. O momento mais visual e compartilhável.</td></tr>
+          <tr><td><b>5. Integrar</b><span>tudo em um fluxo</span></td><td><b>A Primeira Transmutação.</b> O "fogo na panqueca": você aciona a máquina ao vivo na call e o primeiro lead responde na tela, na frente do cliente.</td></tr>
+          <tr><td><b>6. Evoluir</b><span>medir e melhorar</span></td><td><b>A Transmutação Contínua.</b> A auto-otimização vira espetáculo semanal (seção 06) + O Pergaminho: o relatório antes/depois como narrativa.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="aulas">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="num">05</span><h2>As 9 aulas do curso, traduzidas para o seu serviço</h2></div>
+    <p class="sec-intro">A ponte direta entre o método Viralização Máxima (feito para comida) e um serviço digital de captação + CRM + Google.</p>
+    <div class="scroll" style="margin-top:1.8rem">
+      <table class="t-aula">
+        <thead><tr><th>Princípio do curso</th><th>Tradução para O Elixir</th></tr></thead>
+        <tbody>
+          <tr><td><b>Ache o padrão antes de quebrar</b> · Aula 3</td><td>O padrão do mercado é onboarding por planilha e entrega por Loom. <b>Quebre exatamente isso.</b></td></tr>
+          <tr><td><b>Nome que quebra o padrão</b> · Aula 4</td><td>Não venda "agente de SDR". Dê <b>nome e persona</b> — os Elementais, a Bancada, O Farol.</td></tr>
+          <tr><td><b>Superar a expectativa</b> · Aula 2</td><td>O cliente espera um manual. Entregue a <b>primeira venda que a IA fechou às 23h</b>, emoldurada.</td></tr>
+          <tr><td><b>Finalize na frente do cliente</b> · Aula 2</td><td>A "queima da calda": aperte o botão <b>ao vivo na call</b> (etapa Integrar do PGA).</td></tr>
+          <tr><td><b>Unboxing · fogo e água</b> · Aula 5</td><td>Serviço também tem unboxing: um <b>Kit de Ativação</b> que abre em camadas, com elixir, selo e QR.</td></tr>
+          <tr><td><b>Parecer o que não é</b> · Aula 6</td><td>Não entregue "dashboard". Entregue <b>A Bancada</b> — onde os Elementais relatam o dia em linguagem humana.</td></tr>
+          <tr><td><b>Embalagem à altura</b> · Aula 7</td><td>Relatório mensal vira <b>O Pergaminho</b>: narrativa com cor, não tabela de métricas de vaidade.</td></tr>
+          <tr><td><b>Roube de mercados adjacentes</b> · Aula 8</td><td>Roube de RH (contratar), games (missões) e streaming (a IA tem "temporadas").</td></tr>
+          <tr><td><b>Prova social + micro-influência</b> · Aula 9</td><td>Não peça depoimento. <b>Crie o print</b> que o cliente quer postar sozinho — e marque de volta.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="pedra">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="num">06</span><h2>A Pedra: transformar "se ajusta sozinho" em espetáculo</h2></div>
+    <p class="sec-intro">A auto-otimização é a etapa <b>Evoluir</b> do seu Método PGA — só que acontece no escuro. O diferencial é <b>trazê-la para a luz</b> em linguagem humana. Ninguém no seu nicho mostra isso. (Se "Pedra Filosofal" pesar, dá pra chamar só de <b>A Pedra</b> ou <b>Transmutação Contínua</b> — é ofício, não magia.)</p>
+
+    <div class="feature" style="margin-top:1.8rem">
+      <h3 style="font-size:1.35rem; color:var(--verdigris)">O Diário da Pedra</h3>
+      <p style="color:var(--ink-soft); margin-top:.6rem; max-width:60ch">Toda semana, a máquina "narra" o que percebeu e o que ajustou sozinha. A feature técnica vira uma <b>carta viva</b> — e prova o Código SERVIR na prática: <b>Resultado</b> percebido e mensurável, <b>Verdade</b> sem hype.</p>
+      <div class="diary">
+        <b>&gt; Diário da Pedra — semana 03</b><br>
+        "Percebi que mensagens enviadas às <b>19h</b> tiveram <b>+40%</b> de resposta contra as da manhã.<br>
+        Realoquei 70% dos disparos para o fim do dia.<br>
+        O gancho <b>'agenda cheia'</b> converteu mais que 'promoção' — troquei sozinha.<br>
+        Resultado: <b>6 de chumbo viraram ouro</b> esta semana. Sigo refinando a fórmula.<br>
+        <span class="sig">— a Pedra ☿ · orquestrada pela Mariá</span>"
+      </div>
+      <p style="color:var(--ink-soft); margin-top:1.4rem; margin-bottom:0; max-width:60ch"><b>Reforços:</b> mostre a fórmula evoluindo em versões (v1 → v2 → v3); dispare um alerta no WhatsApp — <em>"a Pedra se refinou ✨"</em> — sempre que um número melhorar. A otimização vira evento comemorável.</p>
+    </div>
+  </div>
+</section>
+
+<section id="arsenal">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="num">07</span><h2>O arsenal de ideias</h2></div>
+    <p class="sec-intro">Munição concreta, agrupada por função. Adapte e — como diz a Aula 8 — <b>melhore</b>: entregue com champagne o que os outros entregam com água.</p>
+
+    <div class="cluster">
+      <h3>Nomenclatura que quebra o padrão · Aula 4</h3>
+      <div class="ideas">
+        <div class="idea"><span class="n">01</span><h4>A Bancada</h4><p>Onde seria "dashboard". O <span class="hi">ateliê</span> onde os Elementais trabalham à vista.</p></div>
+        <div class="idea"><span class="n">02</span><h4>O Compêndio</h4><p>O CRM como <span class="hi">livro-razão vivo</span>: cada lead vira um registro com história.</p></div>
+        <div class="idea"><span class="n">03</span><h4>O Pergaminho</h4><p>O relatório mensal. Narrativa selada, <span class="hi">não</span> tabela de métricas.</p></div>
+        <div class="idea"><span class="n">04</span><h4>Chumbo &amp; Ouro</h4><p>Lead frio = chumbo; cliente fiel = ouro. A <span class="hi">metáfora</span> vira métrica visível.</p></div>
+        <div class="idea"><span class="n">05</span><h4>A Ignição</h4><p>Onde seria "onboarding". O momento em que a máquina <span class="hi">acende</span> — sem "ritual".</p></div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Unboxing &amp; Kit de Ativação · Aulas 5 e 7</h3>
+      <div class="ideas">
+        <div class="idea"><span class="n">06</span><h4>Caixa de uma mão só</h4><p>Abre com uma mão (Aula 1) pra ser <span class="hi">filmável</span>. Camadas de descoberta dentro.</p></div>
+        <div class="idea"><span class="n">07</span><h4>O Frasco de Elixir</h4><p>Uma garrafinha lacrada com <span class="hi">QR</span> que abre A Bancada. O digital ganha corpo.</p></div>
+        <div class="idea"><span class="n">08</span><h4>Certidão de Ativação</h4><p>"A sua operação foi transmutada em __/__." Documento <span class="hi">emoldurável</span>.</p></div>
+        <div class="idea"><span class="n">09</span><h4>Selo de lacre</h4><p>Todo entregável lacrado com o símbolo da ANi. <span class="hi">Artesanal, custo baixo, foto garantida.</span></p></div>
+        <div class="idea"><span class="n">10</span><h4>Versão 100% digital</h4><p>Sem verba pra físico? O mesmo unboxing em <span class="hi">micro-site animado</span> em camadas.</p></div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Momentos de revelação · Aulas 2 e 3</h3>
+      <div class="ideas">
+        <div class="idea"><span class="n">11</span><h4>Primeira venda emoldurada</h4><p>"Primeira transmutação: 23h47, enquanto você dormia." O <span class="hi">print que ele vai postar</span>.</p></div>
+        <div class="idea"><span class="n">12</span><h4>Contador ao vivo</h4><p>Na Bancada, um medidor de <span class="hi">chumbo → ouro</span> subindo em tempo real.</p></div>
+        <div class="idea"><span class="n">13</span><h4>Bastidor escondido</h4><p>Construa tudo sem mostrar. A força está na <span class="hi">revelação</span>, não no processo.</p></div>
+        <div class="idea"><span class="n">14</span><h4>Fogo e água digital</h4><p>A magia digital honesta é a <span class="hi">velocidade impossível</span>: responder antes de um humano ler.</p></div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <h3>Viralização, prova social &amp; IP · Aula 9</h3>
+      <div class="ideas">
+        <div class="idea"><span class="n">15</span><h4>Os Elementais como mascotes</h4><p>Como o Hector é um dragão: ilustre e dê voz aos <span class="hi">Sete Elementais</span>. IP próprio da ANi.</p></div>
+        <div class="idea"><span class="n">16</span><h4>Contador público</h4><p>"__ operações já transmutadas." <span class="hi">Prova social</span> que se acumula sozinha.</p></div>
+        <div class="idea"><span class="n">17</span><h4>Link do embaixador</h4><p>Micro-influência comissionada por link (Aula 9), sem pagar caixa adiantado.</p></div>
+        <div class="idea"><span class="n">18</span><h4>Reels de reação real</h4><p>O que mais engaja no perfil do Will é <span class="hi">gente reagindo</span>. Filme o "uau" ao vivo.</p></div>
+        <div class="idea"><span class="n">19</span><h4>Despedida à altura</h4><p>Offboarding memorável: quem sai <span class="hi">bem</span> volta e indica.</p></div>
+        <div class="idea"><span class="n">20</span><h4>Um produto-âncora só</h4><p>Aula 3 e 9: lance <span class="hi">O Elixir</span> impecável, faça viralizar, <em>depois</em> expanda. Nunca 10 de uma vez.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="plano">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="num">08</span><h2>O plano: sprint de 14 dias para a primeira experiência-âncora</h2></div>
+    <p class="sec-intro">Não construa os 6 momentos de uma vez. Construa <b>a espinha</b> — e um único "uau" impecável (A Primeira Transmutação + o Diário da Pedra). Teste, e só então expanda.</p>
+
+    <div class="plan" style="margin-top:2rem">
+      <div class="phase"><div class="days"><b>D1–2</b>Fase 0</div><div>
+        <span class="tag">Ache o padrão · Aula 3</span><h3>Espionar antes de criar</h3>
+        <p>Audite 5 concorrentes. Liste o "álcool gel" que todas fazem — o onboarding e a entrega padrão. É esse padrão que você vai quebrar.</p>
+      </div></div>
+      <div class="phase"><div class="days"><b>D3–4</b>Fase 1</div><div>
+        <span class="tag">Nomear · Aula 4</span><h3>Fechar o vocabulário</h3>
+        <ul>
+          <li>Confirmar os nomes: O Elixir, os Sete Elementais, A Bancada, O Compêndio, O Farol, A Pedra.</li>
+          <li>Decidir: manter Mentores + Elementais em duas camadas, ou fundir.</li>
+          <li>Rascunhar o símbolo/lacre da ANi.</li>
+        </ul>
+      </div></div>
+      <div class="phase"><div class="days"><b>D5–6</b>Fase 2</div><div>
+        <span class="tag">Desenhar a jornada</span><h3>Escolher os 3 "uaus" iniciais</h3>
+        <p>Dos 6 momentos do PGA, eleja 3 para construir agora: <b>O Diagnóstico</b> (Perceber), <b>A Primeira Transmutação</b> (Integrar) e <b>o Diário da Pedra</b> (Evoluir).</p>
+      </div></div>
+      <div class="phase"><div class="days"><b>D7–10</b>Fase 3</div><div>
+        <span class="tag">Construir o âncora · Aulas 2 e 8</span><h3>A Primeira Transmutação ao vivo</h3>
+        <ul>
+          <li>Montar o fluxo captação → CRM → resposta, pronto para acionar na call.</li>
+          <li>Criar o template do Diário da Pedra (texto semi-manual no começo, tudo bem).</li>
+          <li>Roteirizar o momento de revelação da call.</li>
+        </ul>
+      </div></div>
+      <div class="phase"><div class="days"><b>D11–12</b>Fase 4</div><div>
+        <span class="tag">Embalar · Aulas 5 e 7</span><h3>O Kit de Ativação (v1)</h3>
+        <p>Versão digital primeiro: micro-site que abre em camadas com o convite, o lacre e o QR da Bancada. Físico fica para a v2, quando o modelo provar.</p>
+      </div></div>
+      <div class="phase"><div class="days"><b>D13</b>Fase 5</div><div>
+        <span class="tag">Testar · Aula 9</span><h3>Entregar para 1–2 clientes-piloto</h3>
+        <p>Rode a experiência completa (de brinde ou com desconto). <b>Filme a reação.</b> Se ele postar sozinho, você achou o ouro. Se não, ajuste o momento que não transbordou.</p>
+      </div></div>
+      <div class="phase"><div class="days"><b>D14</b>Fase 6</div><div>
+        <span class="tag">Viralizar · Aula 9</span><h3>Escolher o melhor registro e impulsionar</h3>
+        <p>Pegue o melhor vídeo/print, poste, e coloque R$20–50 de impulsionamento (Aula 9). Ative a prova social e procure 1 micro-embaixador.</p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section id="guard">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="num">09</span><h2>Guardrails de marca &amp; As Leis da Bancada</h2></div>
+    <p class="sec-intro">A experiência nunca pode atropelar o seu posicionamento. Estas regras vêm direto da sua Arquitetura (seção 10) — a camada viral obedece a elas.</p>
+
+    <div class="guard" style="margin-top:1.6rem">
+      <h3>O que a experiência NUNCA faz</h3>
+      <ul>
+        <li><b>Não usa espiritualidade como promessa.</b> Alquimia = ofício de laboratório. Os Elementais são personagens, não crença.</li>
+        <li><b>Não apresenta os Elementais antes do problema e do resultado.</b> Perceber (diagnóstico) vem sempre primeiro.</li>
+        <li><b>Não usa "agêntico" sem tradução.</b> Na comunicação, o cliente ouve "sua operação trabalhando sozinha", não jargão.</li>
+        <li><b>Não vira métrica de vaidade.</b> Todo "uau" está amarrado a um número real (Código SERVIR: Resultado).</li>
+        <li><b>Não automatiza o caos.</b> A experiência embala o Método PGA — nunca substitui o diagnóstico.</li>
+      </ul>
+    </div>
+
+    <div class="lawgrid">
+      <div class="lawcard"><b>Lei 1 · Aula 3</b>Ache o padrão antes de tentar quebrar o padrão.</div>
+      <div class="lawcard"><b>Lei 2 · Aula 5</b>Invista na entrega, não só no produto — é mais barato e mais viral.</div>
+      <div class="lawcard"><b>Lei 3 · Aula 2</b>Finalize os 10% finais na frente do cliente.</div>
+      <div class="lawcard"><b>Lei 4 · Aula 5</b>Cuidado com o disruptivo. Use o comum, quebre um detalhe.</div>
+      <div class="lawcard"><b>Lei 5 · Aula 8</b>Roube de mercados adjacentes — e melhore o que roubou.</div>
+      <div class="lawcard"><b>Lei 6 · Aula 9</b>Lance 1, faça viralizar, só então expanda.</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" style="margin-bottom:.6rem">Próximo passo</div>
+      <p style="max-width:46ch; margin:0">Bater o martelo no vocabulário (Elementais + nomes) e desenhar <b>A Primeira Transmutação</b>. Quando decidir, eu monto o roteiro da call, o texto do convite e o template do Diário da Pedra.</p>
+    </div>
+    <p class="fnote">Baseado em: curso Viralização Máxima (Will Weber) + varredura de @willweber.x e @hectorstudiosbr + Arquitetura de Marca ANi v1.0 · Camada de experiência para o produto-âncora O Elixir.</p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var root=document.documentElement, btn=document.getElementById('tgl');
+    function cur(){ if(root.getAttribute('data-theme'))return root.getAttribute('data-theme');
+      return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'; }
+    btn.addEventListener('click',function(){ root.setAttribute('data-theme', cur()==='dark'?'light':'dark'); });
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  })();
+</script>
