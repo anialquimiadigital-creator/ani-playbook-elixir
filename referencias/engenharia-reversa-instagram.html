@@ -1,0 +1,392 @@
+<title>O Código — como 3 perfis criam conteúdo que viraliza e vende no Instagram</title>
+<style>
+  :root{
+    --bg:#faf9f5; --ink:#191712; --muted:#6d685e; --faint:#9a9488;
+    --line:#e7e3d9; --line-soft:#efece3; --accent:#6b46e0; --accent-quiet:#5a3ac9; --code:#4a4636;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#131210; --ink:#ece9e0; --muted:#a09a8c; --faint:#6f6a5e;
+      --line:#2a2721; --line-soft:#221f1a; --accent:#a68bff; --accent-quiet:#b9a4ff; --code:#b8b2a0;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#131210; --ink:#ece9e0; --muted:#a09a8c; --faint:#6f6a5e;
+    --line:#2a2721; --line-soft:#221f1a; --accent:#a68bff; --accent-quiet:#b9a4ff; --code:#b8b2a0;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:Georgia,"Times New Roman",serif; font-size:18px; line-height:1.68;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sans{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .mono{font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace}
+  .tnum{font-variant-numeric:tabular-nums}
+  .wrap{max-width:680px; margin:0 auto; padding:0 26px}
+
+  a{color:var(--accent); text-decoration:none; border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+  a:hover{border-bottom-color:var(--accent)}
+  a:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+
+  header{padding:76px 0 30px}
+  .eyebrow{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--faint); font-weight:600; margin:0}
+  h1{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; font-weight:700; letter-spacing:-.025em; line-height:1.08; font-size:clamp(30px,6.4vw,46px); margin:20px 0 0; text-wrap:balance}
+  .standfirst{color:var(--muted); font-size:20px; margin:20px 0 0; text-wrap:pretty}
+  .meta{font-family:ui-monospace,monospace; font-size:12.5px; color:var(--faint); margin-top:26px; letter-spacing:.01em; line-height:1.7}
+
+  hr{border:0; border-top:1px solid var(--line); margin:52px 0}
+
+  h2{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; font-weight:700; letter-spacing:-.02em; line-height:1.15; font-size:26px; margin:0 0 4px; text-wrap:balance}
+  .section-num{font-family:ui-monospace,monospace; font-size:12.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent-quiet); font-weight:600; display:block; margin-bottom:14px}
+  h4{font-family:-apple-system,BlinkMacSystemFont,sans-serif; font-weight:700; font-size:14px; letter-spacing:.02em; margin:30px 0 10px; color:var(--ink)}
+  p{margin:16px 0}
+  .lead{font-size:19.5px}
+  strong{font-weight:700}
+  em.k{font-style:normal; color:var(--accent-quiet); font-weight:600}
+  .who{font-family:ui-monospace,monospace; font-size:13px; color:var(--faint)}
+
+  /* tables */
+  .t-scroll{overflow-x:auto; margin:14px 0 0}
+  table{width:100%; border-collapse:collapse; font-size:14.5px}
+  th,td{text-align:left; padding:11px 14px 11px 0; border-bottom:1px solid var(--line-soft); vertical-align:top}
+  thead th{font-family:-apple-system,BlinkMacSystemFont,sans-serif; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); font-weight:600; border-bottom:1px solid var(--line)}
+  .num{font-variant-numeric:tabular-nums; white-space:nowrap}
+  .glance td:first-child, .glance th:first-child{padding-right:16px}
+  .glance td:first-child{font-weight:700; font-family:-apple-system,sans-serif}
+  .posts td.g{color:var(--muted); font-size:13.5px; padding-right:4px}
+  .posts td.num{color:var(--ink)}
+  caption{caption-side:bottom; text-align:left; font-family:ui-monospace,monospace; font-size:11.5px; color:var(--faint); margin-top:8px}
+
+  /* códigos */
+  .codes{margin:22px 0 0; padding:0; list-style:none}
+  .codes > li{padding:18px 0; border-top:1px solid var(--line-soft)}
+  .codes > li:first-child{border-top:0}
+  .codes .name{font-family:-apple-system,BlinkMacSystemFont,sans-serif; font-weight:700; font-size:16px; letter-spacing:-.01em}
+  .quote{font-family:ui-monospace,monospace; font-size:14px; line-height:1.6; color:var(--code); margin:9px 0 0; padding-left:16px; border-left:2px solid var(--line)}
+  .quote .cta{color:var(--accent-quiet)}
+  .why{font-size:15.5px; color:var(--muted); margin:9px 0 0}
+  .why b{color:var(--ink); font-weight:600}
+  .metric{font-family:ui-monospace,monospace; font-size:12.5px; color:var(--faint); font-variant-numeric:tabular-nums; letter-spacing:.02em; margin-top:8px; display:block}
+
+  /* principles */
+  .principles{margin:22px 0 0; padding:0; list-style:none; counter-reset:p}
+  .principles li{padding:20px 0; border-top:1px solid var(--line-soft); display:grid; grid-template-columns:34px 1fr; gap:16px}
+  .principles li:first-child{border-top:0}
+  .principles .pn{counter-increment:p; font-family:ui-monospace,monospace; font-weight:600; color:var(--accent-quiet); font-size:15px; padding-top:1px}
+  .principles .pn::before{content:counter(p,decimal-leading-zero)}
+  .principles .pt{font-family:-apple-system,sans-serif; font-weight:700; font-size:17px; letter-spacing:-.01em}
+  .principles p{margin:4px 0 0; font-size:16px; color:var(--muted)}
+
+  /* menu (how-to) */
+  .menu{margin:14px 0 0; padding:0; list-style:none}
+  .menu li{padding:14px 0; border-top:1px solid var(--line-soft); display:grid; grid-template-columns:150px 1fr; gap:18px; align-items:baseline}
+  .menu li:first-child{border-top:0}
+  .menu .lbl{font-family:-apple-system,sans-serif; font-weight:700; font-size:14.5px}
+  .menu .lbl small{display:block; font-weight:400; color:var(--faint); font-size:12px; font-family:ui-monospace,monospace; margin-top:2px}
+  .menu .ex{font-size:15.5px; color:var(--muted)}
+  .menu .ex .mono{color:var(--code); font-size:13.5px}
+  .menu .ex b{color:var(--ink); font-weight:600}
+
+  .callout{font-size:19px; line-height:1.5; margin:28px 0; padding-left:20px; border-left:3px solid var(--accent); text-wrap:pretty}
+  .callout .hl{color:var(--accent-quiet); font-weight:600}
+  .note{font-size:14.5px; color:var(--muted); font-style:italic; margin-top:14px}
+
+  footer{padding:48px 0 80px; color:var(--faint)}
+  footer .src{font-family:ui-monospace,monospace; font-size:12px; line-height:1.9; margin-top:6px}
+
+  @media (max-width:600px){
+    body{font-size:17px}
+    header{padding:56px 0 24px}
+    table{font-size:13px}
+    .menu li{grid-template-columns:1fr; gap:4px}
+    .menu .lbl small{display:inline; margin-left:8px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Engenharia reversa · manual de conteúdo</p>
+    <h1>Como 3 perfis criam conteúdo que viraliza e vende</h1>
+    <p class="standfirst">Desmontei o Instagram da Clara Siqueira, da Kênia Bittencourt e do Oney Araújo — cada gancho, cada CTA, cada métrica e cada funil. No fim, o método destilado pra você aplicar.</p>
+    <p class="meta">
+      ALVOS: @clarasiqueira.sc · @keniabittencourtt · @oneyaraujo<br>
+      COLETA: agent-reach / opencli + fontes públicas · 10 AGO 2026
+    </p>
+  </header>
+
+  <hr>
+
+  <section>
+    <p class="lead">Os três vendem essencialmente a <strong>mesma coisa</strong>: um sistema de posts com nome próprio que promete transformar seguidor em cliente — <em class="k">Código PEV</em>, <em class="k">Desafio 10 mil</em>, <em class="k">Código Viral</em>. E provam o método sendo o próprio case: juntos passam de <strong>3,2&nbsp;milhões de seguidores</strong>. Cada post do feed deles é um “código” rodando ao vivo.</p>
+    <p>Mas jogam de formas <strong>diferentes</strong> — e é aí que mora o ouro: dá pra roubar o melhor de cada.</p>
+
+    <div class="t-scroll">
+    <table class="glance">
+      <thead><tr><th>Perfil</th><th>Alcance</th><th>Otimiza pra</th><th>Funil</th></tr></thead>
+      <tbody>
+        <tr><td>Clara<br><span class="who">Código PEV</span></td><td class="num">561 mil</td><td>Curtida / alcance viral</td><td>Bio → 1 VSL → Hotmart</td></tr>
+        <tr><td>Kenia<br><span class="who">Desafio 10 mil</span></td><td class="num">1,37 mi</td><td>Comentário / DM (lead)</td><td>Bio → Linktree → DM automática</td></tr>
+        <tr><td>Oney<br><span class="who">Código Viral</span></td><td class="num">~1,3 mi</td><td>Viralização de Reels</td><td>Isca → curso → mentoria</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- CLARA -->
+  <section>
+    <span class="section-num">Perfil 01 · o alcance viral</span>
+    <h2>Clara Siqueira</h2>
+    <p><strong>@clarasiqueira.sc · 560.680 seguidores · 470 posts · segue só 494.</strong> Bio: “Fundadora @grupovirax 💜 · Mentora · <em>Transformo Empresárias em Influenciadoras da própria marca</em>”. Vende o <em class="k">Código&nbsp;PEV</em> (Posta, Engaja, Vende): uma biblioteca de roteiros prontos — a promessa literal é <strong>“você só precisa copiar e colar o Código PEV”</strong> e “90 dias de conteúdo planejado”. Funil: bio → VSL (hospedada na ConverteAI/VTurb) → checkout Hotmart, com botão <strong>“EU QUERO O MEU CÓDIGO”</strong> e garantia de 90 dias. Prova social: +14 mil alunos, R$1M+ faturado, 4 países. O jogo dela é <strong>reel falado de opinião</strong>, otimizado pra viralizar — ela é a prova viva.</p>
+
+    <h4>OS CÓDIGOS DELA</h4>
+    <ul class="codes">
+      <li>
+        <div class="name">A pergunta binária <span class="who">// o motor · metade dos posts</span></div>
+        <p class="quote">“Você concorda comigo ou não?”<br><span class="cta">→ me conta nos comentários, compartilha e me segue pra mais vídeos como esse</span></p>
+        <p class="why"><b>Força a pessoa a tomar um lado</b> e comentar. O CTA empilha os 3 sinais que o algoritmo mais premia — comentar, compartilhar, seguir — numa frase só.</p>
+        <span class="metric">recorde: 398.070 curtidas · 12.887 comentários</span>
+      </li>
+      <li>
+        <div class="name">O loop de retenção</div>
+        <p class="quote">“Tem 2 perguntas pra você no vídeo.” <span class="cta">→ comenta aqui e segue pra não perder o próximo vídeo</span></p>
+        <p class="why">Cria <b>expectativa de série</b> — dá motivo pra seguir e voltar. Transforma post solto em novela.</p>
+      </li>
+      <li>
+        <div class="name">A marcação aspiracional</div>
+        <p class="quote">“Marca nos comentários quem um dia vai viver esse sonho com você”<br><span class="cta">→ e comenta: A PRÓXIMA SOU EU!!!</span></p>
+        <p class="why">Marcação <b>traz gente de fora</b> pro post; a frase pronta pra copiar multiplica os comentários.</p>
+      </li>
+      <li>
+        <div class="name">O palpite de curiosidade</div>
+        <p class="quote">“Quantos milhões você acha que custou?” <span class="cta">→ comenta aqui e segue</span></p>
+        <p class="why">Número + curiosidade + status. As pessoas comentam só pra <b>chutar</b> — barreira de participação quase zero.</p>
+      </li>
+      <li>
+        <div class="name">O relatável / a rotina</div>
+        <p class="quote">“Coisas que meu marido me proíbe de fazer” · “Minha rotina da noite que vocês amam”</p>
+        <p class="why">Intercala os posts virais com <b>vida pessoal</b>. Cria vínculo — a audiência “conhece” ela, não só o conteúdo.</p>
+      </li>
+    </ul>
+
+    <h4>OS 12 POSTS QUE COLETEI</h4>
+    <div class="t-scroll">
+    <table class="posts">
+      <thead><tr><th>Data</th><th>Tipo</th><th class="num">Curtidas</th><th class="num">Coment.</th><th>Gancho</th></tr></thead>
+      <tbody>
+        <tr><td class="num">27/10/25</td><td>reel</td><td class="num">398.070</td><td class="num">12.887</td><td class="g">Você concorda comigo ou não?</td></tr>
+        <tr><td class="num">30/07/26</td><td>reel</td><td class="num">73.332</td><td class="num">1.370</td><td class="g">Você concorda comigo ou não?</td></tr>
+        <tr><td class="num">21/02/26</td><td>reel</td><td class="num">30.426</td><td class="num">450</td><td class="g">Minha rotina da noite</td></tr>
+        <tr><td class="num">04/08/26</td><td>reel</td><td class="num">26.692</td><td class="num">425</td><td class="g">Você concorda comigo ou não?</td></tr>
+        <tr><td class="num">01/06/26</td><td>reel</td><td class="num">20.291</td><td class="num">399</td><td class="g">Você concorda comigo ou não?</td></tr>
+        <tr><td class="num">06/08/26</td><td>reel</td><td class="num">11.301</td><td class="num">355</td><td class="g">Você concorda comigo ou não?</td></tr>
+        <tr><td class="num">07/08/26</td><td>reel</td><td class="num">8.118</td><td class="num">331</td><td class="g">Você concorda comigo ou não?</td></tr>
+        <tr><td class="num">05/08/26</td><td>reel</td><td class="num">5.973</td><td class="num">133</td><td class="g">Você concorda comigo ou não?</td></tr>
+        <tr><td class="num">05/08/26</td><td>reel</td><td class="num">3.777</td><td class="num">425</td><td class="g">Quantos milhões você acha que custou?</td></tr>
+        <tr><td class="num">08/08/26</td><td>reel</td><td class="num">3.253</td><td class="num">86</td><td class="g">Coisas que meu marido me proíbe</td></tr>
+        <tr><td class="num">22/09/25</td><td>reel</td><td class="num">2.371</td><td class="num">450</td><td class="g">Marca quem vai viver esse sonho</td></tr>
+        <tr><td class="num">10/08/26</td><td>reel</td><td class="num">993</td><td class="num">133</td><td class="g">Tem 2 perguntas pra você no vídeo</td></tr>
+      </tbody>
+      <caption>Fonte: agent-reach / opencli · 12 posts mais recentes · 10 ago 2026.</caption>
+    </table>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- KENIA -->
+  <section>
+    <span class="section-num">Perfil 02 · a máquina de leads</span>
+    <h2>Kênia Bittencourt</h2>
+    <p><strong>@keniabittencourtt · 1.367.390 seguidores · 2.331 posts · segue 428.</strong> Bio: “🔥 Te ensino a ganhar seguidores e vender todos os dias no Instagram, <em>sem gastar $ com tráfego pago</em>”. Vende o <em class="k">Desafio 10 mil seguidores em 30 dias</em> (Hotmart), além de Mentoria (Viral Academy / Atena) e “Stories que Vendem” — tudo via Linktree. É uma <strong>máquina de volume</strong>: postou <strong>8 vezes só em 10/08</strong>. A virada de chave dela: <strong>otimiza pra comentário, não pra curtida</strong> — a proporção vem invertida (216 curtidas / 761 comentários). Isso é a assinatura da automação de DM.</p>
+
+    <h4>OS CÓDIGOS DELA</h4>
+    <ul class="codes">
+      <li>
+        <div class="name">Palavra-chave → DM automática <span class="who">// o motor de dinheiro</span></div>
+        <p class="quote">“Comenta <strong>MICROFONE</strong>…” · “<strong>Digita V10</strong> que te mostro os modelos validados”</p>
+        <p class="why">A palavra no comentário dispara um robô que <b>manda a oferta na DM</b>. Infla o comentário (sinal-rei do algoritmo) <b>e captura o lead</b> no mesmo gesto.</p>
+        <span class="metric">nos posts com palavra-chave: 690 · 761 · 3.070 comentários</span>
+      </li>
+      <li>
+        <div class="name">Follow-bait fixo no topo da legenda</div>
+        <p class="quote"><span class="cta">“Segue @keniabittencourtt para aprender a criar conteúdo que conecta e viraliza no Instagram 👆”</span></p>
+        <p class="why">Primeira linha de <b>7 dos 12 posts</b>. Ela pede o follow antes de entregar o valor, sempre.</p>
+      </li>
+      <li>
+        <div class="name">Carrossel educativo salvável</div>
+        <p class="why">Carrosséis que ensinam passo a passo geram <b>salvamento e compartilhamento</b> — é a autoridade dela. Os posts de maior curtida são todos carrosséis.</p>
+        <span class="metric">2.544 e 1.908 curtidas — carrosséis educativos</span>
+      </li>
+      <li>
+        <div class="name">Desafio nomeado (o produto vira post)</div>
+        <p class="quote">“O Desafio de 10.000 seguidores em 30 dias é a metodologia perfeita para você…”</p>
+        <p class="why">O desafio com nome próprio <b>ancora o produto</b> dentro do conteúdo. Gerou 3.070 comentários.</p>
+      </li>
+      <li>
+        <div class="name">Quebra de objeção como gancho</div>
+        <p class="quote">“Qual tua desculpa agora? Para toda desculpa eu te trago uma solução” · “Ganhe seguidores E venda — não precisa ser um OU outro”</p>
+        <p class="why">Abre o post <b>derrubando a objeção</b> antes que ela apareça na cabeça da pessoa.</p>
+      </li>
+      <li>
+        <div class="name">Ação do seguidor (prova social / UGC)</div>
+        <p class="quote"><span class="cta">“Posta e me marca que quero ver! 🔥”</span> — “isso vai aumentar muito as visualizações dos seus stories”</p>
+        <p class="why">Transforma o seguidor em <b>divulgador</b>: quem marca gera prova social e alcance de graça.</p>
+      </li>
+    </ul>
+
+    <h4>OS 12 POSTS QUE COLETEI</h4>
+    <div class="t-scroll">
+    <table class="posts">
+      <thead><tr><th>Data</th><th>Tipo</th><th class="num">Curtidas</th><th class="num">Coment.</th><th>Gancho</th></tr></thead>
+      <tbody>
+        <tr><td class="num">26/06/26</td><td>carrossel</td><td class="num">1.383</td><td class="num">3.070</td><td class="g">Desafio de 10.000 seguidores em 30 dias</td></tr>
+        <tr><td class="num">09/08/26</td><td>carrossel</td><td class="num">2.544</td><td class="num">10</td><td class="g">Segue @keniabittencourtt… (educativo)</td></tr>
+        <tr><td class="num">10/08/26</td><td>carrossel</td><td class="num">1.908</td><td class="num">14</td><td class="g">Segue @keniabittencourtt… (educativo)</td></tr>
+        <tr><td class="num">10/08/26</td><td>carrossel</td><td class="num">1.097</td><td class="num">18</td><td class="g">Segue @keniabittencourtt… (educativo)</td></tr>
+        <tr><td class="num">09/08/26</td><td>reel</td><td class="num">890</td><td class="num">690</td><td class="g">Digita V10 que te mostro os modelos</td></tr>
+        <tr><td class="num">10/08/26</td><td>carrossel</td><td class="num">427</td><td class="num">10</td><td class="g">Segue @keniabittencourtt…</td></tr>
+        <tr><td class="num">10/08/26</td><td>reel</td><td class="num">363</td><td class="num">5</td><td class="g">Segue @keniabittencourtt…</td></tr>
+        <tr><td class="num">10/08/26</td><td>reel</td><td class="num">295</td><td class="num">50</td><td class="g">Comenta MICROFONE — qual sua desculpa?</td></tr>
+        <tr><td class="num">09/08/26</td><td>reel</td><td class="num">216</td><td class="num">761</td><td class="g">Segue @keniabittencourtt…</td></tr>
+        <tr><td class="num">10/08/26</td><td>reel</td><td class="num">212</td><td class="num">7</td><td class="g">Segue @keniabittencourtt…</td></tr>
+        <tr><td class="num">10/08/26</td><td>reel</td><td class="num">135</td><td class="num">2</td><td class="g">Posta e me marca que quero ver!</td></tr>
+        <tr><td class="num">10/08/26</td><td>reel</td><td class="num">51</td><td class="num">4</td><td class="g">Segue @keniabittencourtt…</td></tr>
+      </tbody>
+      <caption>Fonte: agent-reach / opencli · 12 posts mais recentes · repare na inversão curtida↔comentário nos posts com palavra-chave.</caption>
+    </table>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ONEY -->
+  <section>
+    <span class="section-num">Perfil 03 · o engenheiro</span>
+    <h2>Oney Araújo</h2>
+    <p><strong>@oneyaraujo · ~1,3 milhão de seguidores · 57,7 mil no YouTube · +61 mil alunos.</strong> O mais “engenheiro” dos três. Trajetória que sustenta a autoridade: começou em 2012 com humor de musculação (Canal Ironia), 100 mil inscritos em 2013, saiu do CLT em 2020, <strong>faturou R$262 mil em 7 dias em 2021</strong> com o método “Ciclo de 60 Dias”, e em 2023–24 lançou o <em class="k">Código Viral®</em>. Nele, literalmente <strong>“decodificou 19 padrões de viralização”</strong> — o produto <em>é</em> o código.</p>
+
+    <h4>O PRODUTO, EM 3 MÓDULOS</h4>
+    <ul class="codes">
+      <li>
+        <div class="name">1 · Os 19 padrões de viralização</div>
+        <p class="why">Combinar <b>padrão + tema + persona</b> pra aumentar a chance de o vídeo performar acima da média. Dicas soltas viram sistema numerado e registrado (®).</p>
+      </li>
+      <li>
+        <div class="name">2 · Formatos de vídeo</div>
+        <p class="why">Tipos de Reels com maior tração no momento — versões <b>pra quem aparece e pra quem não quer aparecer</b>, adaptadas por nicho.</p>
+      </li>
+      <li>
+        <div class="name">3 · Roteiro, ganchos e ritmo</div>
+        <p class="why">Ganchos virais prontos, cronograma de postagem e edição. Acelerado pelo <b>Viral Planner</b> e pela IA <b>Chat Viral®</b>.</p>
+      </li>
+    </ul>
+
+    <h4>O FUNIL EM ESCADA</h4>
+    <p class="quote">Checklist / Carrossel Viral <span class="cta">(iscas grátis)</span> → Código Viral® <span class="cta">(curso + IA)</span> → Mentoria Viral Pro <span class="cta">(6 meses, premium)</span></p>
+    <p class="why">Cada degrau qualifica pro próximo: a isca captura, o curso converte, a mentoria escala o ticket.</p>
+
+    <h4>OS GANCHOS NA PRÁTICA <span class="who" style="text-transform:none;letter-spacing:0">(coletados de @ocodigoviral)</span></h4>
+    <ul class="codes">
+      <li>
+        <div class="name">Alerta no topo + salvar</div>
+        <p class="quote"><span class="cta">“🚨 Já salva esse Reels!”</span> — “não faça sua audiência pensar, <strong>direcione a resposta</strong>”</p>
+        <p class="why">Abertura com <b>🚨 no topo</b> + CTA de salvar antes do conteúdo. O princípio-mãe: <b>direcione a resposta</b> — dê a ação mastigada, nunca deixe a pessoa pensar.</p>
+        <span class="metric">2.965 curtidas · 496 comentários — o Reels de maior tração do perfil do curso</span>
+      </li>
+      <li>
+        <div class="name">Alerta + like-bait</div>
+        <p class="quote"><span class="cta">“🚨 Já deixa o like!”</span> — “o algoritmo mudou e tem um bom tempo…”</p>
+        <p class="why">Mesma estrutura: pega a atenção com o alerta, pede a ação primeiro, entrega a novidade depois.</p>
+      </li>
+    </ul>
+    <p class="note">Nota: a conta pessoal @oneyaraujo devolve erro em todos os endpoints da ferramenta (HTTP 400 — bloqueio específico da conta, não da nossa sessão; confirmei que outras contas funcionam). Os ganchos acima vieram do perfil oficial do curso, @ocodigoviral; o restante, da página de vendas e de fontes públicas. As métricas post a post do perfil pessoal dele seguem inacessíveis.</p>
+  </section>
+
+  <hr>
+
+  <!-- SÍNTESE -->
+  <section>
+    <span class="section-num">A síntese</span>
+    <h2>O que se repete nos três</h2>
+    <p class="lead">Tira as diferenças de estilo e sobra um <strong>playbook único</strong> — o esqueleto de qualquer perfil que cresce e vende:</p>
+    <ul class="principles">
+      <li><span class="pn mono"></span><div><span class="pt">Dão um nome ao método</span><p>Código PEV, Desafio 10 mil, Código Viral. Dicas soltas viram sistema proprietário — cria autoridade e justifica o preço.</p></div></li>
+      <li><span class="pn mono"></span><div><span class="pt">São a própria prova</span><p>O melhor argumento de venda é o feed. Ninguém compra “como crescer” de quem não cresceu.</p></div></li>
+      <li><span class="pn mono"></span><div><span class="pt">Todo post pede UMA ação</span><p>Seguir, comentar uma palavra, marcar, salvar. Nunca postam sem CTA explícito — e sempre no topo.</p></div></li>
+      <li><span class="pn mono"></span><div><span class="pt">Engenharia de comentário</span><p>Pergunta binária (Clara) ou palavra-chave (Kenia). Comentário é o sinal-rei — e, na Kenia, também é o lead.</p></div></li>
+      <li><span class="pn mono"></span><div><span class="pt">Formato replicável e barato</span><p>Reel falado ou carrossel, sem produção. Vendem a facilidade — “é só copiar e colar”.</p></div></li>
+      <li><span class="pn mono"></span><div><span class="pt">Funil em escada até a oferta</span><p>Conteúdo grátis → isca → curso → mentoria. A bio é sempre a porta de entrada.</p></div></li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <!-- HOW TO -->
+  <section>
+    <span class="section-num">O método destilado</span>
+    <h2>Como criar conteúdo que viraliza e vende</h2>
+    <p class="lead">Tudo acima vira quatro decisões que você toma <strong>em todo post</strong>. Escolha um item de cada menu e você tem um post pronto no padrão validado dos três.</p>
+
+    <h4>1 · MENU DE GANCHO — a primeira linha (fisga em 2 segundos)</h4>
+    <ul class="menu">
+      <li><div class="lbl">Opinião binária<small>alcance</small></div><div class="ex"><span class="mono">“Você concorda comigo ou não?”</span> — polariza e enche de comentário.</div></li>
+      <li><div class="lbl">Palavra-chave<small>lead / DM</small></div><div class="ex"><span class="mono">“Comenta [PALAVRA] que te mando o…”</span> — <b>captura o contato</b> enquanto engaja.</div></li>
+      <li><div class="lbl">Alerta + salvar<small>salvamento</small></div><div class="ex"><span class="mono">“🚨 Já salva: [promessa]”</span> — urgência no topo, valor logo depois.</div></li>
+      <li><div class="lbl">Palpite<small>curiosidade</small></div><div class="ex"><span class="mono">“Quanto você acha que custou / demora?”</span> — comentar é chutar, custo zero.</div></li>
+      <li><div class="lbl">Quebra de objeção<small>venda</small></div><div class="ex"><span class="mono">“Qual sua desculpa agora?”</span> — derruba o “mas eu não…” antes dele nascer.</div></li>
+      <li><div class="lbl">Aspiracional + marcação<small>alcance</small></div><div class="ex"><span class="mono">“Marca quem precisa viver isso”</span> — puxa gente de fora pro post.</div></li>
+    </ul>
+
+    <h4>2 · MENU DE CTA — peça UMA ação, sempre</h4>
+    <ul class="menu">
+      <li><div class="lbl">Seguir</div><div class="ex"><span class="mono">“me segue pra mais [tema]”</span> — grude em todo post, como a Kenia.</div></li>
+      <li><div class="lbl">Comentar palavra</div><div class="ex"><span class="mono">“comenta [PALAVRA]”</span> — o único CTA que também gera lead.</div></li>
+      <li><div class="lbl">Salvar</div><div class="ex"><span class="mono">“já salva pra não perder”</span> — sinal forte pra conteúdo-tutorial.</div></li>
+      <li><div class="lbl">Marcar / compartilhar</div><div class="ex"><span class="mono">“marca quem…” · “manda pra…”</span> — alcance orgânico de graça.</div></li>
+    </ul>
+
+    <h4>3 · MENU DE FORMATO — escolha pela função</h4>
+    <ul class="menu">
+      <li><div class="lbl">Reel de opinião</div><div class="ex"><b>Função: alcance.</b> Você falando, gancho polêmico, sem produção. O motor da Clara.</div></li>
+      <li><div class="lbl">Reel com palavra-chave</div><div class="ex"><b>Função: lead.</b> Ensina algo e troca o “resto” por um comentário → DM. O motor da Kenia.</div></li>
+      <li><div class="lbl">Carrossel educativo</div><div class="ex"><b>Função: autoridade + salvamento.</b> Passo a passo que a pessoa guarda.</div></li>
+      <li><div class="lbl">Bastidor / relatável</div><div class="ex"><b>Função: vínculo.</b> Rotina, vida pessoal — humaniza entre os posts virais.</div></li>
+    </ul>
+
+    <h4>4 · RITMO E FUNIL — o que sustenta tudo</h4>
+    <ul class="menu">
+      <li><div class="lbl">Volume</div><div class="ex">Kenia posta <b>várias vezes ao dia</b> (2.331 posts); Clara, poucos e virais. Consistência &gt; perfeição — <b>poste pra testar</b> e dobre no que engaja.</div></li>
+      <li><div class="lbl">Bio = porta</div><div class="ex">Todo conteúdo empurra pra bio → isca/VSL/Linktree. Sem esse link, o alcance não vira dinheiro.</div></li>
+      <li><div class="lbl">Escada</div><div class="ex">Isca grátis → produto de entrada → mentoria. Cada post alimenta um degrau.</div></li>
+    </ul>
+
+    <p class="callout">O princípio-mãe que une os três: <span class="hl">direcione a resposta, nunca faça a audiência pensar.</span> Todo post entrega o gancho no primeiro segundo e a ação mastigada — e sempre pede <span class="hl">uma coisa só</span>.</p>
+  </section>
+
+  <hr>
+
+  <!-- NEXT -->
+  <section>
+    <span class="section-num">Próximo passo</span>
+    <h2>De referência → o Codebook da ANi</h2>
+    <p>Este documento é a matéria-prima e o manual. O passo seguinte é escrever <strong>os seus posts</strong> por cima desta estrutura: um método com o seu nome, ganchos adaptados pro seu nicho de automação &amp; IA, e o funil montado pra fechar os primeiros clientes.</p>
+    <p>Me diga <strong>o que você vende e pra quem</strong> — e eu já entrego os primeiros roteiros prontos, escolhendo os ganchos e CTAs dos menus acima.</p>
+  </section>
+
+  <footer>
+    <div class="mono">Dossiê de inteligência competitiva · uso interno ANi · dados públicos.</div>
+    <div class="src">
+      perfis + posts + métricas → agent-reach / opencli instagram (10 ago 2026)<br>
+      páginas de venda → clarasiqueira.com · linktr.ee/keniabittencourtt · codigoviral.com.br<br>
+      <a href="https://novoafiliado.com/codigo-pev-clara-siqueira/">Código PEV</a> · <a href="https://hotmart.com/pt-br/marketplace/produtos/desafio-de-10-mil-seguidores-em-30-dias/K96207515L">Desafio 10 mil</a> · <a href="https://reportei.com/oney-araujo-quem-e/">Oney Araújo (Reportei)</a>
+    </div>
+  </footer>
+
+</div>

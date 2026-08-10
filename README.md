@@ -17,6 +17,7 @@ Método PGA e a Constelação de Mentores (reapresentada como **os Sete Elementa
 | [`playbook/o-elixir-playbook.html`](playbook/o-elixir-playbook.html) | O playbook visual completo (abre no navegador). Tema claro/escuro. |
 | [`referencias/arquitetura-marca-ani.html`](referencias/arquitetura-marca-ani.html) | Snapshot da Arquitetura de Marca ANi v1.0 (base do trabalho). |
 | [`referencias/metodo-viralizacao-resumo.md`](referencias/metodo-viralizacao-resumo.md) | Resumo das 9 aulas do curso Viralização Máxima. |
+| [`referencias/engenharia-reversa-instagram.html`](referencias/engenharia-reversa-instagram.html) | Engenharia reversa de 3 perfis-referência (Clara Siqueira, Kênia Bittencourt, Oney Araújo): ganchos, CTAs, métricas dos 24 posts e o método destilado de como criar conteúdo que viraliza e vende. |
 | [`proximos-passos.md`](proximos-passos.md) | Decisões pendentes e o que fazer amanhã. |
 
 **Playbook publicado (artefato Claude):**
@@ -69,6 +70,7 @@ Cada etapa do método vira um momento-uau fotografável (problema e resultado **
 
 - Curso **Viralização Máxima** — Will Weber (transcrição das 9 aulas).
 - Varredura dos perfis **@willweber.x** e **@hectorstudiosbr** (Instagram).
+- Engenharia reversa de **@clarasiqueira.sc**, **@keniabittencourtt** e **@oneyaraujo** (Instagram, 10/08/2026) — ver `referencias/engenharia-reversa-instagram.html`.
 - **Arquitetura de Marca ANi v1.0** (04/08/2026).
 
 *Material de trabalho interno — ANi | Alquimia Digital.*
