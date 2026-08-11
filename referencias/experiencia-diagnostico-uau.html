@@ -1,0 +1,238 @@
+<title>ANi · O Diagnóstico-Uau — blueprint de experiência</title>
+<style>
+  :root {
+    --paper: #F5F8FC; --card: #FFFFFF; --ink: #131C2E; --ink-soft: #4C586E;
+    --line: #D8E0EC; --navy: #0A1429; --blue: #1E9FD4; --blue-bright: #38C0F1;
+    --gold: #C6841E; --gold-bright: #E8A73C; --good: #1F8F5F; --focus: #1E9FD4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #070E1C; --card: #0F1B30; --ink: #E8EEF8; --ink-soft: #A2AEC6;
+      --line: #22304C; --navy: #05090F; --blue: #38C0F1; --blue-bright: #6FD3F5;
+      --gold: #E8A73C; --gold-bright: #F4C266; --good: #45C489; --focus: #38C0F1;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #070E1C; --card: #0F1B30; --ink: #E8EEF8; --ink-soft: #A2AEC6;
+    --line: #22304C; --navy: #05090F; --blue: #38C0F1; --blue-bright: #6FD3F5;
+    --gold: #E8A73C; --gold-bright: #F4C266; --good: #45C489; --focus: #38C0F1;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 18px; line-height: 1.62; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 840px; margin: 0 auto; padding: 0 24px; }
+  .serif { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+  .eyebrow { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 12px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin: 0 0 12px;
+    display: flex; align-items: center; gap: 12px; }
+  .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--gold); flex: none; }
+
+  .hero { background: radial-gradient(900px 380px at 12% -10%, rgba(232,167,60,0.20), transparent 60%),
+      radial-gradient(800px 400px at 92% 0%, rgba(56,192,241,0.16), transparent 60%), var(--navy);
+    color: #EAF1FB; border-bottom: 3px solid var(--gold); }
+  .hero .wrap { padding: 58px 24px 52px; }
+  .hero .eyebrow { color: var(--gold-bright); } .hero .eyebrow::before { background: var(--gold-bright); }
+  .hero h1 { font-size: clamp(32px, 5.6vw, 52px); line-height: 1.05; margin: 0 0 18px; font-weight: 600;
+    text-wrap: balance; letter-spacing: -0.015em; }
+  .hero h1 .warm { color: var(--gold-bright); font-style: italic; }
+  .hero .thesis { font-size: clamp(17px, 2.3vw, 20px); color: #C4D2E6; max-width: 60ch; margin: 0; }
+  .hero .thesis b { color: #EAF1FB; }
+  .tags { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .tags .t { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.05em;
+    border: 1px solid rgba(255,255,255,0.18); color: #C4D2E6; border-radius: 999px; padding: 6px 13px; }
+
+  section { padding: 48px 0; border-bottom: 1px solid var(--line); }
+  h2.serif { font-size: clamp(24px, 3.8vw, 33px); line-height: 1.12; margin: 0 0 8px; font-weight: 600;
+    letter-spacing: -0.01em; text-wrap: balance; }
+  .lede { color: var(--ink-soft); margin: 0 0 22px; max-width: 64ch; }
+  p { margin: 0 0 16px; } p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); }
+  em.term { font-style: normal; color: var(--gold); font-weight: 600; }
+  .blue-term { color: var(--blue); font-weight: 600; }
+
+  .callout { border-left: 3px solid var(--gold); background: var(--card); padding: 18px 22px;
+    border-radius: 0 8px 8px 0; margin: 22px 0; font-family: "Iowan Old Style", Palatino, Georgia, serif;
+    font-size: 20px; line-height: 1.5; }
+
+  /* emotional arc */
+  .arc { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 26px 0; }
+  @media (max-width: 680px) { .arc { grid-template-columns: 1fr 1fr; } }
+  .arc .step { padding: 16px 14px; border: 1px solid var(--line); background: var(--card); position: relative; }
+  .arc .step:not(:last-child)::after { content: "→"; position: absolute; right: -9px; top: 50%;
+    transform: translateY(-50%); color: var(--gold); font-size: 15px; z-index: 2; background: var(--paper); padding: 2px; }
+  @media (max-width: 680px){ .arc .step:nth-child(2)::after{ display:none; } }
+  .arc .emo { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
+  .arc .from { font-size: 13px; color: var(--ink-soft); text-decoration: line-through; margin-top: 6px; }
+  .arc .to { font-size: 16px; font-weight: 700; color: var(--ink); }
+  .arc .d { font-size: 13px; color: var(--ink-soft); margin-top: 6px; line-height: 1.4; }
+
+  /* three acts */
+  .act { display: grid; grid-template-columns: 78px 1fr; gap: 18px; margin: 16px 0; align-items: start; }
+  .act .badge { text-align: center; }
+  .act .badge .k { font-family: ui-monospace, monospace; font-size: 11px; color: var(--gold); letter-spacing: 0.1em; }
+  .act .badge .n { font-family: "Iowan Old Style", Georgia, serif; font-size: 30px; font-weight: 700; color: var(--ink); line-height: 1; }
+  .act .body { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+  .act .body h4 { margin: 0 0 6px; font-size: 17px; }
+  .act .body h4 .time { font-family: ui-monospace, monospace; font-size: 12px; color: var(--blue); font-weight: 400; margin-left: 6px; }
+  .act .body p { font-size: 15px; margin: 0 0 8px; }
+  .act .body .peak { color: var(--good); font-weight: 700; }
+
+  /* mini matrix for the cell */
+  .cell3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 22px 0; }
+  @media (max-width: 680px) { .cell3 { grid-template-columns: 1fr; } }
+  .cell3 .c { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; border-top: 3px solid var(--blue); }
+  .cell3 .c h4 { margin: 0 0 8px; font-size: 13px; font-family: ui-monospace, monospace; letter-spacing: 0.05em; color: var(--blue); text-transform: uppercase; }
+  .cell3 .c p { font-size: 14.5px; color: var(--ink-soft); margin: 0; }
+  .cell3 .c p b { color: var(--ink); }
+
+  /* the object */
+  .object { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; margin: 22px 0; }
+  .object h4 { margin: 0 0 12px; font-size: 16px; color: var(--gold); }
+  .object ul { margin: 0; padding-left: 18px; } .object li { margin: 8px 0; font-size: 15px; color: var(--ink-soft); }
+  .object li b { color: var(--ink); }
+
+  ol.clean, ul.check { margin: 18px 0; padding: 0; list-style: none; display: grid; gap: 11px; counter-reset: c; }
+  ol.clean li { position: relative; padding-left: 38px; line-height: 1.5; counter-increment: c; }
+  ol.clean li::before { content: counter(c); position: absolute; left: 0; top: 1px; width: 26px; height: 26px;
+    background: var(--navy); color: var(--gold-bright); border-radius: 7px; font-family: ui-monospace, monospace;
+    font-size: 13px; display: flex; align-items: center; justify-content: center; }
+  ul.check li { position: relative; padding-left: 32px; line-height: 1.5; }
+  ul.check li::before { content: "☐"; position: absolute; left: 0; top: -1px; color: var(--blue); font-size: 18px; }
+  ul.check li b { color: var(--ink); }
+
+  .guard { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--good); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 18px 0; font-size: 15px; color: var(--ink-soft); }
+  .guard b { color: var(--good); }
+
+  footer { padding: 30px 0 46px; }
+  .disclaimer { font-size: 12.5px; color: var(--ink-soft); font-style: italic; }
+  a { color: var(--blue); }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 3px; }
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">ANi · Blueprint de experiência #1</p>
+    <h1 class="serif">O Diagnóstico-<span class="warm">Uau</span></h1>
+    <p class="thesis">Todo mundo oferece "call de diagnóstico gratuito" e manda um PDF chato. A ANi mantém 90% igual e quebra <b>um</b> detalhe: entrega um <b>mapa que faz o empresário se sentir visto</b> e uma <b>transmutação ao vivo</b> que prova que é real. Célula <b>Experiência × Processo</b> da Matriz, pronta pra rodar esta semana.</p>
+    <div class="tags">
+      <span class="t">PGA · Perceber</span>
+      <span class="t">Disney · sentir-se visto + o "uau"</span>
+      <span class="t">Will · quebre 1 detalhe · 10% ao vivo</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <p class="eyebrow">Por que esta célula primeiro</p>
+    <h2 class="serif">O diagnóstico é o primeiro contato — ele define a emoção</h2>
+    <p class="lede">É o momento de maior alavancagem que existe: é o <strong>primeiro toque real</strong>, acontece <strong>antes de qualquer venda</strong> (então derruba a objeção do medo na origem) e hoje <strong>todo concorrente faz igual e chato</strong>. Transformá-lo é onde você tem o maior retorno pelo menor custo — exatamente o produto viral que o Will descreve: comum, baixo custo, alta margem, replicável.</p>
+    <div class="callout serif">O empresário chega com medo e vergonha ("minha operação é uma bagunça"). Se o primeiro contato o faz se sentir <em>julgado</em>, você perde. Se o faz se sentir <em>visto</em>, você já ganhou a confiança — antes de falar em preço.</div>
+  </section>
+
+  <section>
+    <p class="eyebrow">O conceito</p>
+    <h2 class="serif">"O Mapa dos Gargalos Invisíveis"</h2>
+    <p class="lede">O nome já é a promessa (usa seu pilar editorial "gargalos que ninguém vê"). O entregável não é um relatório — é um <strong>mapa visual da operação do cliente</strong>, onde cada gargalo escondido aparece como um <em class="term">vazamento luminoso</em>, com um número ao lado: quanto tempo/dinheiro está escorrendo ali por mês.</p>
+    <p>É a estética de <strong>laboratório de alquimia</strong> aplicada: você pega a "matéria bruta" (a operação confusa) e a revela. O mapa é personalizado, bonito e — de propósito — <strong>fotografável</strong>. O cliente quer mostrar pra sócia: <em>"olha o que descobriram da minha empresa"</em>.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">A jornada emocional · guestologia</p>
+    <h2 class="serif">De medo a advogado da marca, em 20 minutos</h2>
+    <div class="arc">
+      <div class="step"><div class="emo">Antes</div><div class="from">medo · vergonha</div><div class="to">Ceticismo</div><div class="d">"Mais uma promessa de IA."</div></div>
+      <div class="step"><div class="emo">Ato 1</div><div class="from">exposto</div><div class="to">Visto</div><div class="d">O mapa mostra que você entendeu o negócio dele nos detalhes.</div></div>
+      <div class="step"><div class="emo">Ato 2</div><div class="from">confuso</div><div class="to">Esperança</div><div class="d">Cada vazamento tem um custo. Dá pra resolver.</div></div>
+      <div class="step"><div class="emo">Ato 3</div><div class="from">"será?"</div><div class="to">Confiança</div><div class="d">A transmutação ao vivo. Não é promessa — é real.</div></div>
+    </div>
+    <p>Essa é a <span class="blue-term">bússola da guestologia</span> em ação: você projetou a experiência a partir da <em class="term">emoção</em> do convidado, não a partir das suas features.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">O ritual · o processo da experiência</p>
+    <h2 class="serif">Três atos — e os 10% que você finaliza ao vivo</h2>
+
+    <div class="act">
+      <div class="badge"><div class="k">ATO</div><div class="n">1</div></div>
+      <div class="body">
+        <h4>A coleta silenciosa <span class="time">antes · assíncrono</span></h4>
+        <p>Um intake leve (7 perguntas ou 15 min de conversa) alimenta <b>Grégory</b> (pesquisa) e <b>Dr. Alfredo</b> (diagnóstico). Você monta o mapa nos bastidores. Aqui mora o "bater a cabeça na lâmpada": um detalhe específico do negócio dele que ninguém notaria — e você notou.</p>
+      </div>
+    </div>
+    <div class="act">
+      <div class="badge"><div class="k">ATO</div><div class="n">2</div></div>
+      <div class="body">
+        <h4>A revelação <span class="time">ao vivo · ~15 min</span></h4>
+        <p>Você não manda o mapa — você o <b>revela</b> numa call. <b>Mariá</b> conduz com acolhimento (nunca julga). Mostra a operação como um emaranhado, e então acende os vazamentos, um a um, com o custo de cada um. O cliente vê, pela primeira vez, o invisível.</p>
+      </div>
+    </div>
+    <div class="act">
+      <div class="badge"><div class="k">ATO</div><div class="n">3</div></div>
+      <div class="body">
+        <h4>A transmutação ao vivo <span class="time">o "uau" · ~60 seg</span></h4>
+        <p>O clímax. Você escolhe <b>o vazamento nº 1</b> e, na frente do cliente, aciona um mini-agente já preparado que executa aquela tarefa <b>agora</b> — lê uma mensagem real e redige a resposta, puxa o dado, gera o orçamento. <span class="peak">"Esse é o vazamento. Agora veja eu tapá-lo — ao vivo."</span> São os "10% finalizados na frente do cliente" do Will. É isso que vira story.</p>
+      </div>
+    </div>
+    <p style="margin-top:18px;">Fecho: você entrega o mapa como <strong>presente</strong> (não como isca), com uma frase só de convite. A proposta comercial vem <em>depois</em>, por outro canal — o diagnóstico não pede nada em troca. Isso é o <span class="blue-term">SERVIR</span> antes do vender.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Os 3 sistemas desta célula</p>
+    <h2 class="serif">Como Elenco, Cenário e Processo se combinam aqui</h2>
+    <div class="cell3">
+      <div class="c"><h4>Elenco</h4><p><b>Grégory + Dr. Alfredo</b> geram o diagnóstico; <b>Mariá</b> revela com calor humano. A regra: acolher, nunca julgar a bagunça.</p></div>
+      <div class="c"><h4>Cenário</h4><p>O <b>mapa visual</b> (vazamentos luminosos + custo), a estética alquimia, a call bem produzida. O objeto é lindo e fotografável.</p></div>
+      <div class="c"><h4>Processo</h4><p>PGA <b>Perceber</b>: intake → montagem → revelação em 3 atos → transmutação ao vivo → mapa-presente. Roteiro replicável.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">O gatilho viral</p>
+    <h2 class="serif">O objeto que o cliente quer compartilhar</h2>
+    <div class="object">
+      <h4>O Mapa — anatomia do que faz virar story</h4>
+      <ul>
+        <li><b>Personalizado e específico</b> — tem o nome da empresa dele e um detalhe que só quem olhou de perto acharia (a "sombra na lâmpada").</li>
+        <li><b>O invisível vira visível</b> — vazamentos que ele sentia mas não via, agora com forma e cor.</li>
+        <li><b>Um número que dói (do bom)</b> — "R$ X/mês escorrendo aqui". Isso é o que ele repete pra sócia.</li>
+        <li><b>Belo o bastante pra print</b> — some a moldura "chata de PDF"; ganha a moldura "descoberta".</li>
+        <li><b>Uma frase-assinatura</b> da ANi no rodapé — a marca viaja junto com o print.</li>
+      </ul>
+    </div>
+    <p>Will diria: o viral quase sempre está na <em class="term">entrega</em>, não no produto — e é mais barato. O diagnóstico (o "produto") todo mundo tem; o <strong>mapa + a revelação ao vivo</strong> (a entrega) é o detalhe quebrado que ninguém copiou.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Montar esta semana</p>
+    <h2 class="serif">Checklist enxuto (baixo custo, replicável)</h2>
+    <ul class="check">
+      <li><b>Template do Mapa</b> — 1 layout reutilizável (Canva ou HTML) com os "vazamentos luminosos". Faz uma vez, usa em todo cliente.</li>
+      <li><b>Intake de 7 perguntas</b> — formulário ou roteiro de 15 min que capta a matéria bruta.</li>
+      <li><b>1 mini-agente demo</b> — reaproveitável e adaptável por cliente (ex.: redator de resposta no WhatsApp usando o CRM). Só 1, bem feito.</li>
+      <li><b>Roteiro da revelação</b> — o script dos 3 atos (com a frase do clímax marcada).</li>
+      <li><b>Mapa-presente</b> — versão PDF que ele leva, com 1 frase de convite (sem pedir nada).</li>
+    </ul>
+    <div class="guard"><b>Guarda-corpo SERVIR (Verdade):</b> a transmutação ao vivo tem que ser <b>real</b> e funcionar. Se não der pra ser real naquele caso, não finja — mostre uma gravação real de outro cliente. Nunca encante com truque falso; isso quebra a confiança que é o padrão nº 1.</div>
+  </section>
+
+  <section style="border-bottom:none;">
+    <p class="eyebrow">Saber se funcionou</p>
+    <h2 class="serif">Como medir o encantamento</h2>
+    <ol class="clean">
+      <li><b>Ele fotografou/compartilhou o mapa?</b> (sinal de transbordamento — o coração transbordou)</li>
+      <li><b>Disse "eu não sabia disso"?</b> (sinal de que se sentiu visto)</li>
+      <li><b>Pediu a proposta sem você empurrar?</b> (medo → confiança convertido)</li>
+      <li><b>Indicou alguém depois do diagnóstico?</b> (virou advogado antes de ser cliente)</li>
+    </ol>
+    <p style="margin-top:16px;">Amarra direto nas suas métricas de marca: pedidos de diagnóstico → reuniões → propostas, com DMs qualificadas na entrada.</p>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p class="disclaimer">Blueprint de experiência interno — célula Experiência × Processo da Matriz de Integração da ANi. Aplica conceitos de O Jeito Disney de Encantar os Clientes (Disney Institute) e Viralização Máxima (Will Weber). ANi | Alquimia Digital · 11/08/2026.</p>
+</footer>
