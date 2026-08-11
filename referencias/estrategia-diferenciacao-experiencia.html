@@ -1,0 +1,313 @@
+<title>ANi · Diferenciação por Experiência — análise + pesquisa + Matriz</title>
+<style>
+  :root {
+    --paper: #F5F8FC;
+    --card: #FFFFFF;
+    --ink: #131C2E;
+    --ink-soft: #4C586E;
+    --line: #D8E0EC;
+    --navy: #0A1429;
+    --blue: #1E9FD4;
+    --blue-bright: #38C0F1;
+    --gold: #C6841E;
+    --gold-bright: #E8A73C;
+    --good: #1F8F5F;
+    --focus: #1E9FD4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #070E1C;
+      --card: #0F1B30;
+      --ink: #E8EEF8;
+      --ink-soft: #A2AEC6;
+      --line: #22304C;
+      --navy: #05090F;
+      --blue: #38C0F1;
+      --blue-bright: #6FD3F5;
+      --gold: #E8A73C;
+      --gold-bright: #F4C266;
+      --good: #45C489;
+      --focus: #38C0F1;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #070E1C;
+    --card: #0F1B30;
+    --ink: #E8EEF8;
+    --ink-soft: #A2AEC6;
+    --line: #22304C;
+    --navy: #05090F;
+    --blue: #38C0F1;
+    --blue-bright: #6FD3F5;
+    --gold: #E8A73C;
+    --gold-bright: #F4C266;
+    --good: #45C489;
+    --focus: #38C0F1;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 18px; line-height: 1.62; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 840px; margin: 0 auto; padding: 0 24px; }
+  .serif { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+
+  .eyebrow {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--blue); margin: 0 0 12px; display: flex; align-items: center; gap: 12px;
+  }
+  .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--blue); flex: none; }
+
+  /* HERO */
+  .hero {
+    background:
+      radial-gradient(900px 380px at 15% -10%, rgba(56,192,241,0.20), transparent 60%),
+      radial-gradient(900px 420px at 90% 0%, rgba(232,167,60,0.16), transparent 60%),
+      var(--navy);
+    color: #EAF1FB; border-bottom: 3px solid var(--blue);
+  }
+  .hero .wrap { padding: 60px 24px 54px; }
+  .hero .eyebrow { color: var(--blue-bright); }
+  .hero .eyebrow::before { background: var(--blue-bright); }
+  .hero h1 {
+    font-size: clamp(32px, 5.6vw, 52px); line-height: 1.05; margin: 0 0 20px;
+    font-weight: 600; text-wrap: balance; letter-spacing: -0.015em;
+  }
+  .hero h1 .warm { color: var(--gold-bright); font-style: italic; }
+  .hero .thesis { font-size: clamp(17px, 2.3vw, 20px); color: #C4D2E6; max-width: 60ch; margin: 0; }
+  .hero .thesis b { color: #EAF1FB; }
+  .credit { margin-top: 26px; font-size: 13px; color: #8397B5; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  .credit b { color: #C4D2E6; font-weight: 600; }
+
+  section { padding: 50px 0; border-bottom: 1px solid var(--line); }
+  h2.serif { font-size: clamp(25px, 4vw, 34px); line-height: 1.12; margin: 0 0 8px; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
+  .lede { color: var(--ink-soft); margin: 0 0 24px; max-width: 64ch; }
+  p { margin: 0 0 16px; } p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); }
+  em.term { font-style: normal; color: var(--gold); font-weight: 600; }
+  .blue-term { color: var(--blue); font-weight: 600; }
+
+  .callout {
+    border-left: 3px solid var(--gold); background: var(--card);
+    padding: 18px 22px; border-radius: 0 8px 8px 0; margin: 24px 0;
+    font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: 20px; line-height: 1.5;
+  }
+
+  /* two-column strength/gap */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+  @media (max-width: 640px) { .split { grid-template-columns: 1fr; } }
+  .box { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; }
+  .box h4 { margin: 0 0 12px; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+  .box.win h4 { color: var(--good); }
+  .box.gap h4 { color: var(--gold); }
+  .box ul { margin: 0; padding-left: 18px; }
+  .box li { margin: 7px 0; font-size: 15px; color: var(--ink-soft); }
+  .box li b { color: var(--ink); }
+
+  /* market stat tiles */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin: 24px 0; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; border-top: 3px solid var(--blue); }
+  .stat .n { font-family: "Iowan Old Style", Georgia, serif; font-size: 34px; font-weight: 700; color: var(--ink); line-height: 1; font-variant-numeric: tabular-nums; }
+  .stat .n .u { font-size: 18px; color: var(--blue); }
+  .stat .l { font-size: 13px; color: var(--ink-soft); margin-top: 8px; line-height: 1.4; }
+  .stat.warm { border-top-color: var(--gold); }
+  .stat.warm .n .u { color: var(--gold); }
+
+  /* WEDGE diagram */
+  .wedge { margin: 26px 0; }
+  .wedge svg { width: 100%; height: auto; display: block; }
+
+  .layer { display: grid; grid-template-columns: 130px 1fr; gap: 18px; align-items: center; margin: 14px 0; }
+  @media (max-width: 560px){ .layer { grid-template-columns: 1fr; gap: 6px; } }
+  .layer .tag { font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-align: right; font-weight: 700; }
+  @media (max-width: 560px){ .layer .tag { text-align: left; } }
+  .layer.sub .tag { color: var(--blue); }
+  .layer.exp .tag { color: var(--gold); }
+  .layer.res .tag { color: var(--good); }
+  .layer p { margin: 0; font-size: 15.5px; }
+
+  /* MATRIZ */
+  .matriz-note { font-size: 15px; color: var(--ink-soft); background: var(--card); border: 1px dashed var(--line); border-radius: 8px; padding: 12px 16px; margin: 18px 0; }
+  .matriz-note b { color: var(--gold); }
+  table.matriz { border-collapse: collapse; width: 100%; min-width: 720px; margin: 20px 0; font-size: 13.5px; }
+  table.matriz th, table.matriz td { border: 1px solid var(--line); padding: 12px 13px; text-align: left; vertical-align: top; }
+  table.matriz thead th { background: var(--navy); color: var(--blue-bright); font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.03em; }
+  table.matriz thead th:first-child { background: var(--navy); color: #8397B5; }
+  table.matriz tbody th { background: var(--card); white-space: nowrap; font-size: 13px; }
+  table.matriz tbody th .p { display:block; font-weight:700; color: var(--gold); }
+  table.matriz tbody th .m { display:block; font-size:11px; color: var(--ink-soft); font-weight:400; font-family: ui-monospace, monospace; margin-top:3px; }
+  table.matriz td { color: var(--ink-soft); background: var(--card); }
+  table.matriz td b { color: var(--ink); }
+  table.matriz tbody tr:first-child th, table.matriz tbody tr:first-child td { border-top: 2px solid var(--gold); }
+
+  ol.clean { margin: 18px 0; padding: 0; list-style: none; display: grid; gap: 11px; counter-reset: c; }
+  ol.clean li { position: relative; padding-left: 38px; line-height: 1.5; }
+  ol.clean li { counter-increment: c; }
+  ol.clean li::before { content: counter(c); position: absolute; left: 0; top: 1px; width: 26px; height: 26px; background: var(--navy); color: var(--blue-bright); border-radius: 7px; font-family: ui-monospace, monospace; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+
+  footer { padding: 32px 0 46px; }
+  .sources { font-size: 12.5px; color: var(--ink-soft); line-height: 1.7; }
+  .sources b { color: var(--ink); }
+  .disclaimer { margin-top: 16px; font-size: 12.5px; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 14px; font-style: italic; }
+  a { color: var(--blue); }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 3px; }
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">ANi · Alquimia Digital — nota estratégica</p>
+    <h1 class="serif">Todo mundo vende o agente.<br>Ninguém vende a <span class="warm">experiência</span> de ter um.</h1>
+    <p class="thesis">O mercado está lotado de quem vende IA como <b>software e promessa</b>. Está vazio de quem entrega IA como <b>experiência que acolhe um empresário com medo</b>. Esse é o espaço da ANi — e o livro da Disney + o método de Will Weber são o mapa.</p>
+    <div class="credit">
+      <span><b>Base</b> · repositório ani-playbook-elixir</span>
+      <span><b>Lentes</b> · O Jeito Disney + Viralização Máxima</span>
+      <span><b>Pesquisa</b> · mercado de IA/agentes 2025–2026</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- PARTE A -->
+  <section>
+    <p class="eyebrow">Parte A · Leitura da sua marca</p>
+    <h2 class="serif">O que a ANi já tem — e a única peça que falta</h2>
+    <p class="lede">Passei a arquitetura da marca (Alquimia Operacional, Código SERVIR, Método PGA, Constelação) pela lente da Disney e do Will. Diagnóstico direto:</p>
+    <div class="split">
+      <div class="box win">
+        <h4>✓ A substância já é forte e rara</h4>
+        <ul>
+          <li><b>SERVIR</b> é anti-hype por design — Verdade e Responsabilidade no núcleo. Isso já te separa de 84% do mercado (ver Parte B).</li>
+          <li><b>Método PGA</b> (Perceber→Evoluir) é um processo de verdade, não "Loom + fatura".</li>
+          <li><b>Constelação de Mentores</b> é um elenco pronto — nomes, missões, governança.</li>
+          <li><b>Inimigo da marca</b> nítido: "IA como enfeite/hype".</li>
+        </ul>
+      </div>
+      <div class="box gap">
+        <h4>◆ A peça que falta: a camada de experiência</h4>
+        <ul>
+          <li>A marca fala à <b>cabeça</b> (gargalo, ROI, processo). O empresário decide pelo <b>estômago</b> (medo, desconfiança).</li>
+          <li>SERVIR entrega <b>resultado</b>; falta o <b>encantamento</b> — o "uau" fotografável do Will, a magia prática da Disney.</li>
+          <li>A Constelação existe no papel; falta virar <b>elenco que encanta</b> (momento-uau na entrega).</li>
+          <li>O anti-hype corre um risco: soar <b>racional e frio</b> num mercado que compra por emoção.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout serif">A ANi tem a poção certa (Will chama de "substância"). Falta o frasco, o ritual e a queima da calda na frente do cliente. Substância sem experiência não viraliza nem encanta — só informa.</div>
+  </section>
+
+  <!-- PARTE B -->
+  <section>
+    <p class="eyebrow">Parte B · Pesquisa de mercado</p>
+    <h2 class="serif">O mercado não está cheio onde você quer jogar</h2>
+    <p class="lede">Os números de 2025–2026 desenham o campo com uma clareza incomum. Dois grupos de dados que, juntos, formam a sua brecha:</p>
+
+    <h3 class="serif" style="font-size:19px;margin:26px 0 4px;">1 · A demanda é gigante — e a barreira é emocional, não técnica</h3>
+    <div class="stats">
+      <div class="stat"><div class="n">R$ 12,4<span class="u"> bi</span></div><div class="l">mercado BR de automação inteligente com IA em 2026 (era R$ 7,1 bi em 2024)</div></div>
+      <div class="stat warm"><div class="n">75<span class="u">%</span></div><div class="l">dos pequenos e médios empreendedores <b>não usam IA</b> de forma alguma</div></div>
+      <div class="stat warm"><div class="n">70<span class="u">%</span></div><div class="l"><b>desconfiam</b> plenamente das ferramentas digitais</div></div>
+      <div class="stat warm"><div class="n">69<span class="u">%</span></div><div class="l">apontam a <b>resistência cultural / fator humano</b> como a maior barreira</div></div>
+    </div>
+    <p>Traduzindo: o freio do seu cliente <strong>não é preço nem tecnologia — é medo</strong>. Medo de não saber usar, de ser substituído, de errar, de mais uma promessa furada. E quem vende feature/ROI <em class="term">não trata o medo</em>. Trata a planilha.</p>
+
+    <h3 class="serif" style="font-size:19px;margin:32px 0 4px;">2 · A concorrência é barulhenta, mas sem narrativa</h3>
+    <div class="stats">
+      <div class="stat"><div class="n">16<span class="u">%</span></div><div class="l">das agências têm uma <b>narrativa de IA diferenciada e testada</b>. As outras 84% só têm "talking points"</div></div>
+      <div class="stat"><div class="n">257<span class="u">%</span></div><div class="l">ROI médio de projetos de IA em 3 anos — o resultado existe; falta quem faça <b>sentir</b></div></div>
+      <div class="stat"><div class="n">→</div><div class="l">modelos migrando de "acesso a software" para <b>resultado e experiência</b> (agent-as-a-service)</div></div>
+    </div>
+    <p>A saturação é <strong>de software e de hype</strong> — não de <strong>resultado entregue com experiência</strong>. "O mercado está cheio onde não importa; vazio onde importa." É exatamente a leitura do Will para produto viral: todo mundo faz o mesmo, quem quebra <em class="term">um detalhe da experiência</em> ganha.</p>
+
+    <div class="callout serif">A diferenciação em 2026 não vem de mais IA. Vem de <span class="blue-term">confiança</span> + <span style="color:var(--gold)">conexão emocional</span>. E pesquisa do Google mostra: marcas B2B criam vínculos emocionais <em>mais fortes</em> que B2C — porque o risco (profissional e pessoal) é maior.</div>
+  </section>
+
+  <!-- A CUNHA -->
+  <section>
+    <p class="eyebrow">A síntese · a cunha da ANi</p>
+    <h2 class="serif">Substância fria + experiência quente = "IA como amiga"</h2>
+    <p class="lede">O posicionamento que ninguém ocupa: convidar o empresário a olhar a IA como uma <strong>ferramenta-amiga que dá experiências positivas</strong> — não como uma ameaça que ele precisa entender. A ANi empilha três camadas:</p>
+
+    <div class="layer sub">
+      <div class="tag">Substância</div>
+      <p><span class="blue-term">SERVIR + Método PGA + agentes</span> — o que resolve de verdade. É a base (Will: "ache o padrão antes de quebrar"). Sem isso, é hype.</p>
+    </div>
+    <div class="layer exp">
+      <div class="tag">Experiência</div>
+      <p><span style="color:var(--gold);font-weight:600">Disney + Will</span> — o invólucro que encanta: guestologia da emoção, momentos-uau fotografáveis, a Constelação como elenco, o "10% na frente do cliente".</p>
+    </div>
+    <div class="layer res">
+      <div class="tag">Sentimento</div>
+      <p><b style="color:var(--good)">Confiança no lugar do medo.</b> O empresário sai sentindo que ganhou uma aliada, não que contratou um fornecedor de tecnologia. É isso que se compartilha.</p>
+    </div>
+
+    <p style="margin-top:22px;">Repare como isso resolve os dois lados da Parte B de uma vez: ataca o <strong>medo</strong> do comprador (barreira nº 1) com <strong>experiência</strong>, e ocupa a narrativa diferenciada que <strong>84% não têm</strong>. A Disney chama isso de <em class="term">cortesia</em> (tratar como a pessoa quer ser tratada) elevada a <em class="term">espetáculo</em>.</p>
+  </section>
+
+  <!-- PARTE C: MATRIZ -->
+  <section>
+    <p class="eyebrow">Parte C · A ferramenta</p>
+    <h2 class="serif">Matriz de Integração da ANi</h2>
+    <p class="lede">A ferramenta-mãe do livro, preenchida para a ANi: os <strong>4 padrões priorizados</strong> (linhas) cruzados com os <strong>3 sistemas de entrega</strong> (colunas). Cada célula é uma "hora da verdade" — onde a experiência acontece ou se perde.</p>
+
+    <p style="margin-bottom:6px;"><strong>Tema de Atendimento proposto</strong> (a frase-força, sua para validar):</p>
+    <div class="callout serif" style="border-left-color:var(--blue);">"Transformar o medo da IA em confiança e resultado — devolvendo tempo, clareza e tranquilidade a quem empreende."</div>
+
+    <div class="matriz-note"><b>Ordem de prioridade</b> = regra de decisão em conflito (o de cima vence o de baixo). Para um comprador com medo, <b>Confiança</b> vem antes de tudo. Resultado é padrão 4 na <i>ordem de desempate</i> — não em importância: é o piso não-negociável que o SERVIR já garante.</div>
+
+    <div style="overflow-x:auto;">
+      <table class="matriz">
+        <thead>
+          <tr><th>Padrão ANi (prioridade)</th><th>ELENCO<br>(Constelação + ANi)</th><th>CENÁRIO<br>(perfil, landing, entrega)</th><th>PROCESSO<br>(Método PGA, venda)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="p">1 · Confiança</span><span class="m">≈ Segurança · SERVIR: Verdade + Responsab.</span></th>
+            <td>Mentores com <b>governança e handoff humano visíveis</b>. Nunca prometer mágica; declarar limites e riscos. Presença humana nos momentos sensíveis.</td>
+            <td>Mostrar <b>bastidores reais</b> e antes/depois medidos. Zero métrica de vaidade. Transparência de dados e LGPD como parte do "cenário".</td>
+            <td>Etapa <b>Governar</b> do PGA: limites, autonomia, intervenção humana, logs observáveis. Diagnóstico honesto "que dói de tão certeiro".</td>
+          </tr>
+          <tr>
+            <th><span class="p">2 · Cuidado</span><span class="m">≈ Cortesia · SERVIR: Serviço</span></th>
+            <td><b>Mariá acolhe</b> e orquestra; escuta o problema antes de vender. Fala como amiga, sem jargão — traduz "agêntico". </td>
+            <td>Ambiente na <b>língua do empresário pragmático</b>, não techspeak. Conteúdo que nomeia a dor ("gargalos que ninguém vê"). Onboarding que acalma.</td>
+            <td>Etapa <b>Perceber</b>: ouvir pessoas, diagnóstico. Adaptar o ritmo ao medo do cliente. Atenção especial a quem "não sabe usar".</td>
+          </tr>
+          <tr>
+            <th><span class="p">3 · Experiência</span><span class="m">≈ Espetáculo · Will + Disney</span></th>
+            <td>A <b>Constelação como elenco vivo</b> que encanta (personas, momentos-uau). O mentor que faz além do esperado.</td>
+            <td>Estética de <b>laboratório/alquimia</b>; unboxing da solução; materiais fotografáveis. A IA <b>apresentada como amiga</b> que dá experiências positivas.</td>
+            <td>Cada etapa do PGA vira <b>momento-uau fotografável</b> (playbook O Elixir). "Finalize os 10% na frente do cliente" (Will). A "primeira transmutação ao vivo".</td>
+          </tr>
+          <tr>
+            <th><span class="p">4 · Resultado</span><span class="m">≈ Eficiência · SERVIR: Resultado</span></th>
+            <td>Elenco que <b>devolve tempo</b>; Levi integra; relatórios claros. O time reduz trabalho manual, visivelmente.</td>
+            <td><b>Dashboards e relatório antes/depois</b>; indicadores de sucesso à vista; operação observável.</td>
+            <td>Etapas <b>Arquitetar → Integrar → Evoluir</b>: baseline→impacto, SOPs, roadmap. ROI que aparece (mercado: retorno em ~6 meses).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Como usar: (1) <strong>projetar</strong> — preencher/afinar cada célula com ações reais; (2) <strong>diagnosticar</strong> — quando algo "não encanta", achar a célula fraca; (3) <strong>benchmarking</strong> — rodar a mesma matriz sobre um concorrente e ver onde ele é só substância.</p>
+  </section>
+
+  <section style="border-bottom:none;">
+    <p class="eyebrow">Próximos passos sugeridos</p>
+    <ol class="clean">
+      <li><b>Validar o Tema de Atendimento</b> (ou reescrevê-lo com suas palavras) — é o crivo de toda decisão daqui pra frente.</li>
+      <li><b>Escolher 1 "hora da verdade" da matriz</b> para virar experiência real esta semana (ex.: o diagnóstico-uau, célula Experiência × Processo).</li>
+      <li><b>Reposicionar o conteúdo do Instagram</b> do eixo "cabeça" (features/ROI) para o eixo "estômago" (medo → confiança), mantendo o SERVIR como prova.</li>
+      <li><b>Rodar a matriz sobre 1 concorrente</b> analisado na engenharia reversa — para enxergar, célula a célula, onde ele é só software.</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p class="sources"><b>Fontes de mercado:</b> Canaltech / Mind Consulting (mercado BR de IA 2026) · Seu Dinheiro (70% desconfiam / 75% não usam IA) · Deloitte, KPMG, Forbes Brasil (barreira cultural/humana 69%) · Revenue Memo (16% com narrativa diferenciada) · EY, Google/TopRank, Adobe (experiência e conexão emocional em B2B). <b>Lentes:</b> O Jeito Disney de Encantar os Clientes (Disney Institute) e Viralização Máxima (Will Weber) — resumos no próprio repositório.</p>
+  <p class="disclaimer">Nota estratégica interna para validação — não é proposta comercial. ANi | Alquimia Digital · 11/08/2026.</p>
+</footer>
