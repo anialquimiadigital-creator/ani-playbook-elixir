@@ -17,13 +17,13 @@ Método PGA e a Constelação de Mentores (reapresentada como **os Sete Elementa
 | [`playbook/o-elixir-playbook.html`](playbook/o-elixir-playbook.html) | O playbook visual completo (abre no navegador). Tema claro/escuro. |
 | [`referencias/arquitetura-marca-ani.html`](referencias/arquitetura-marca-ani.html) | Snapshot da Arquitetura de Marca ANi v1.0 (base do trabalho). |
 | [`referencias/metodo-viralizacao-resumo.md`](referencias/metodo-viralizacao-resumo.md) | Resumo das 9 aulas do curso Viralização Máxima. |
-| [`referencias/engenharia-reversa-instagram.html`](referencias/engenharia-reversa-instagram.html) | Engenharia reversa de 3 perfis-referência (Clara Siqueira, Kênia Bittencourt, Oney Araújo): ganchos, CTAs, métricas dos 24 posts e o método destilado de como criar conteúdo que viraliza e vende. |
+| [`referencias/engenharia-reversa-instagram.html`](referencias/engenharia-reversa-instagram.html) | Engenharia reversa de 4 perfis-referência (Clara Siqueira, Kênia Bittencourt, Oney Araújo e **Fellipe Sales** — este último no nicho de IA/automação, o mesmo da ANi): ganchos, CTAs, métricas dos 48 posts e o método destilado de como criar conteúdo que viraliza e vende. |
 | [`proximos-passos.md`](proximos-passos.md) | Decisões pendentes e o que fazer amanhã. |
 
 **Playbook publicado (artefato Claude):**
 https://claude.ai/code/artifact/5ed263e2-59fa-4ca1-887a-a9b6abb0d824
 
-**Engenharia reversa dos 3 perfis (artefato Claude):**
+**Engenharia reversa dos 4 perfis (artefato Claude):**
 https://claude.ai/code/artifact/ad6c8f91-620c-4f03-bc5a-08331ca7a791
 
 ---
@@ -73,7 +73,7 @@ Cada etapa do método vira um momento-uau fotografável (problema e resultado **
 
 - Curso **Viralização Máxima** — Will Weber (transcrição das 9 aulas).
 - Varredura dos perfis **@willweber.x** e **@hectorstudiosbr** (Instagram).
-- Engenharia reversa de **@clarasiqueira.sc**, **@keniabittencourtt** e **@oneyaraujo** (Instagram, 10/08/2026) — ver `referencias/engenharia-reversa-instagram.html`.
+- Engenharia reversa de **@clarasiqueira.sc**, **@keniabittencourtt**, **@oneyaraujo** e **@ofellipesales** (Instagram, 10–11/08/2026) — ver `referencias/engenharia-reversa-instagram.html`.
 - **Arquitetura de Marca ANi v1.0** (04/08/2026).
 
 *Material de trabalho interno — ANi | Alquimia Digital.*
