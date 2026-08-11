@@ -284,6 +284,34 @@
     border-top: 1px solid var(--line); padding-top: 16px; font-style: italic;
   }
 
+  table.matriz {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 520px;
+    margin: 22px 0;
+    font-size: 14px;
+  }
+  table.matriz th, table.matriz td {
+    border: 1px solid var(--line);
+    padding: 11px 13px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.matriz thead th {
+    background: var(--navy);
+    color: var(--gold-bright);
+    font-family: ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  table.matriz tbody th {
+    background: var(--paper);
+    color: var(--coral);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  table.matriz td { color: var(--ink-soft); background: var(--paper); }
+
   a { color: var(--coral); }
   :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 3px; }
 </style>
@@ -292,10 +320,10 @@
   <div class="wrap">
     <p class="eyebrow">Disney Institute · Abstração de conhecimento</p>
     <h1 class="serif">O Jeito Disney de <em>Encantar</em> os Clientes</h1>
-    <p class="thesis">Encantamento não é sorte nem talento inato — é <strong>método replicável</strong>. O que o cliente vê é magia; o que a empresa faz nos bastidores é a execução disciplinada de um sistema.</p>
+    <p class="thesis">"Atendimento de qualidade significa <strong>superar as expectativas</strong> dos convidados e <strong>prestar atenção aos detalhes</strong>." Não há feitiçaria — há um processo repetível: o <strong>Ciclo de Atendimento de Qualidade</strong>.</p>
     <div class="credit">
-      <span><b>Fonte</b> · livro do Disney Institute (Benvirá)</span>
-      <span><b>Estrutura</b> · 6 partes</span>
+      <span><b>Fonte</b> · Disney Institute · orig. <em>Be Our Guest</em> (2001)</span>
+      <span><b>Ed. BR</b> · Saraiva, 2011 · 6 capítulos</span>
       <span><b>Uso</b> · referência ANi | Alquimia Digital</span>
     </div>
   </div>
@@ -317,6 +345,38 @@
       <span class="chip">interação → <b>espetáculo</b></span>
       <span class="chip">bastidores → <b>backstage</b></span>
     </div>
+    <p style="margin-top:24px;"><strong>O Fator Uau</strong> — encantar é <em class="term">primeiro satisfazer, depois exceder</em>, e fazer disso um dever diário, não um acaso heroico. <strong>"Bater a cabeça na lâmpada"</strong> é a obsessão pelo detalhe que ninguém nota conscientemente — a atenção do convidado nunca é interrompida por algo que deveria estar lá e não está.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">O modelo-espinha</p>
+    <h2 class="serif">O Ciclo de Atendimento de Qualidade</h2>
+    <p class="lede">Tudo no livro pendura aqui: uma espiral contínua com o <strong>convidado no centro</strong> e quatro elementos ao redor. A guestologia alimenta o ciclo inteiro.</p>
+    <div class="diagram">
+      <svg viewBox="0 0 640 300" role="img" aria-label="Ciclo de Atendimento de Qualidade: convidado no centro, alimentado pela guestologia, cercado por tema, padrões, sistemas de entrega e integração">
+        <circle cx="320" cy="150" r="128" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+        <circle cx="320" cy="150" r="64" fill="var(--navy)"/>
+        <text x="320" y="145" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="700" fill="#F0C866">CONVIDADO</text>
+        <text x="320" y="163" text-anchor="middle" font-family="ui-monospace, monospace" font-size="9" fill="#AEBBDA">guestologia</text>
+        <!-- 4 nodes -->
+        <g font-family="ui-sans-serif, system-ui, sans-serif" font-size="12.5" font-weight="700" fill="var(--ink)" text-anchor="middle">
+          <rect x="238" y="6" width="164" height="34" rx="8" fill="var(--paper)" stroke="var(--gold)" stroke-width="1.5"/>
+          <text x="320" y="28">1 · TEMA</text>
+          <rect x="452" y="118" width="176" height="34" rx="8" fill="var(--paper)" stroke="var(--gold)" stroke-width="1.5"/>
+          <text x="540" y="140">2 · PADRÕES</text>
+          <rect x="230" y="260" width="180" height="34" rx="8" fill="var(--paper)" stroke="var(--gold)" stroke-width="1.5"/>
+          <text x="320" y="282">3 · SISTEMAS</text>
+          <rect x="12" y="118" width="176" height="34" rx="8" fill="var(--coral)" stroke="none"/>
+          <text x="100" y="140" fill="#2A0E04">4 · INTEGRAÇÃO</text>
+        </g>
+      </svg>
+    </div>
+    <ol class="clean">
+      <li><b>Tema do atendimento</b> — a frase-força / propósito (Cap. 2).</li>
+      <li><b>Padrões de atendimento</b> — Segurança › Cortesia › Espetáculo › Eficiência, priorizados (Cap. 2).</li>
+      <li><b>Sistemas de atendimento</b> — Elenco · Cenário · Processo (Caps. 3–5).</li>
+      <li><b>Integração</b> — funde os três sistemas para cumprir tema + padrões (Cap. 6).</li>
+    </ol>
   </section>
 
   <section>
@@ -452,7 +512,21 @@
         <line x1="320" y1="210" x2="320" y2="246" stroke="var(--navy-soft)" stroke-width="1.6" marker-end="url(#ar)"/>
       </svg>
     </div>
-    <p>Integração é identificar <strong>quais detalhes tratar</strong> e <strong>quais expectativas superar</strong>, reunindo elenco, cenário e processo numa experiência única e completa.</p>
+    <p>A ferramenta prática é a <strong>Matriz de Integração</strong>: linhas = os padrões em ordem de prioridade; colunas = os três sistemas. Cada célula é uma <em class="term">"hora da verdade"</em> — e faz uma pergunta.</p>
+    <div style="overflow-x:auto;">
+      <table class="matriz">
+        <thead>
+          <tr><th></th><th>Elenco</th><th>Cenário</th><th>Processo</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>Segurança</th><td>Como o elenco garante a segurança?</td><td>Como o ambiente protege?</td><td>Como reagimos a emergências?</td></tr>
+          <tr><th>Cortesia</th><td>…</td><td>…</td><td>…</td></tr>
+          <tr><th>Espetáculo</th><td>…</td><td>…</td><td>…</td></tr>
+          <tr><th>Eficiência</th><td>Como o elenco agiliza?</td><td>Como o cenário facilita?</td><td>Como o processo cria eficiência?</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Serve para <strong>projetar</strong> a experiência, <strong>diagnosticar</strong> falhas (isolar a célula) e fazer <strong>benchmarking</strong>. É escalável: da jornada ponta a ponta a um único momento de atendimento.</p>
   </section>
 
   <section class="ani">
@@ -473,6 +547,6 @@
 </main>
 
 <footer class="wrap">
-  <p class="sources"><b>Fontes consultadas:</b> 12min (resumo do livro) · Facto Agência (as 6 partes) · Lederman Consulting (Guestology) · HubSpot (Disney's Four Keys) · Goodreads (ficha da obra).</p>
-  <p class="disclaimer">Abstração do conhecimento da obra a partir de fontes que a descrevem — não uma reprodução do texto integral, protegido por direitos autorais. Material de referência interno · ANi | Alquimia Digital.</p>
+  <p class="sources"><b>Origem:</b> estudo feito a partir do texto integral do livro (ed. Saraiva 2011, 141 p.), lido nos capítulos e frameworks centrais, complementado por fontes públicas (12min · Facto Agência · Lederman Consulting · HubSpot · Goodreads).</p>
+  <p class="disclaimer">Abstração/resumo autoral para uso interno — não reproduz o texto integral da obra, protegido por direitos autorais (Lei 9.610/98). Material de referência · ANi | Alquimia Digital.</p>
 </footer>
