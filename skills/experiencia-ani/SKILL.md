@@ -15,8 +15,11 @@ description: >-
   "cria um post/carrossel/reels sobre X", "monta uma oferta/campanha", "escreve a legenda/DM",
   "como eu vendo isso", "melhora esse texto", "isso está fraco/genérico", "quero me diferenciar",
   "nome pra esse produto", "roteiro de venda", "qual meu propósito/posicionamento", "isso está
-  alinhado com quem eu sou". NÃO use para implementação puramente técnica de agentes (código,
-  integração, deploy) quando não há camada de comunicação, marca, propósito ou venda.
+  alinhado com quem eu sou", "escreve um e-mail pra reativar um lead", "responde esse comentário
+  de quem pediu pra saber mais". Se o objetivo é atrair, encantar, vender ou soar como a ANi, é
+  aqui — mesmo que a peça envolva IA, agente ou automação. NÃO use para trabalho puramente
+  técnico (código, webhook, n8n, integração, deploy, RAG/embeddings), planilha, agenda/calendário
+  ou explicação técnica, quando não há camada de comunicação, marca, propósito ou venda.
 ---
 
 # Experiência ANi — o método da casa
