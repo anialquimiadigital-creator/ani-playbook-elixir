@@ -52,10 +52,11 @@ onde 90% do conteúdo genérico erra (começa pela feature, não pela pessoa).
 0. **Ancore no propósito e na singularidade.** Antes da persuasão, o "porquê". Reconecte a peça
    ao **propósito definido da ANi** (ver `references/proposito-ani.md`) e à singularidade da
    fundadora — é isso que dá autoridade sem hype e torna a marca impossível de copiar. Norte:
-   **R$ 50 mil/mês recorrente até dez/2026**, servindo cada cliente de forma extraordinária. A
-   **tríade de valor** — *resultado · controle · liberdade* — deve aparecer no fim de toda peça
-   (não "eficiência/automação", mas o que elas geram pro dono). Puxe as leis de caráter
-   (`references/leis-sucesso-petry.md`) quando o tema for missão, posicionamento ou identidade.
+   **R$ 50 mil/mês recorrente até dez/2026**, servindo cada cliente de forma extraordinária. Use
+   a **tríade de valor** — *resultado · controle · liberdade* — como **filtro invisível**, não
+   como bordão: escolha por cena **qual** transformação aparece, sem repetir as três no fim de
+   toda peça (vira fórmula). Puxe as leis de caráter (`references/leis-sucesso-petry.md`) quando
+   o tema for missão, posicionamento ou identidade.
 
 1. **Guestologia primeiro — entre no estômago.** Antes de escrever uma linha, defina o convidado:
    - *Necessidade* (o funcional) · *Desejo* (o propósito real) · *Estereótipo* (o que ele já
@@ -83,6 +84,9 @@ onde 90% do conteúdo genérico erra (começa pela feature, não pela pessoa).
    nada de espiritualidade como promessa; traduzir "agêntico" em linguagem simples; nunca
    automatizar/prometer sobre processo quebrado; sem métrica de vaidade; a Constelação entra
    *depois* de nomear o problema e o resultado.
+   **E cheque o tom** (guarda-corpos em `references/proposito-ani.md`): não presuma a emoção da
+   pessoa; não soe superior; troque defesas ("sem venda") por convite honesto. Entrar pela
+   tensão humana, sim — mas sem afirmar o que ela sente.
 
 6. **Entregue + explique a alavanca.** Junto da peça, diga em 1–2 linhas qual emoção você mirou
    e qual alavanca de experiência usou — para a ANi aprender o método, não só receber o texto.
@@ -90,8 +94,8 @@ onde 90% do conteúdo genérico erra (começa pela feature, não pela pessoa).
 ## Como isso muda o que você produz (o antes → depois)
 
 - ❌ "3 formas de usar IA no seu negócio" (features, fala à cabeça)
-  ✅ "O medo de que a IA te substitua está te custando tempo — e não é o que vai acontecer"
-  (emoção → confiança, depois entrega a substância)
+  ✅ "É difícil confiar numa IA que decide sozinha quando ninguém te mostra onde ela para e
+  quando você assume o controle." (entra pela tensão sem presumir o que a pessoa sente)
 - ❌ "Diagnóstico gratuito da sua operação" (igual a todo mundo)
   ✅ "O Mapa dos Gargalos Invisíveis" — nome que quebra o padrão + entrega fotografável
 - ❌ Legenda que lista o que o agente faz
