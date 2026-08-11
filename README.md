@@ -18,6 +18,7 @@ Método PGA e a Constelação de Mentores (reapresentada como **os Sete Elementa
 | [`referencias/arquitetura-marca-ani.html`](referencias/arquitetura-marca-ani.html) | Snapshot da Arquitetura de Marca ANi v1.0 (base do trabalho). |
 | [`referencias/metodo-viralizacao-resumo.md`](referencias/metodo-viralizacao-resumo.md) | Resumo das 9 aulas do curso Viralização Máxima. |
 | [`referencias/engenharia-reversa-instagram.html`](referencias/engenharia-reversa-instagram.html) | Engenharia reversa de 4 perfis-referência (Clara Siqueira, Kênia Bittencourt, Oney Araújo e **Fellipe Sales** — este último no nicho de IA/automação, o mesmo da ANi): ganchos, CTAs, métricas dos 48 posts e o método destilado de como criar conteúdo que viraliza e vende. |
+| [`referencias/jeito-disney-encantar-clientes.md`](referencias/jeito-disney-encantar-clientes.md) · [`.html`](referencias/jeito-disney-encantar-clientes.html) | Abstração do livro **O Jeito Disney de Encantar os Clientes** (Disney Institute): guestologia, a bússola de 4 pontos, os 4 padrões de atendimento, os 3 sistemas de entrega (elenco, cenário, processo) e a integração — com tradução prática para a ANi. |
 | [`proximos-passos.md`](proximos-passos.md) | Decisões pendentes e o que fazer amanhã. |
 
 **Playbook publicado (artefato Claude):**

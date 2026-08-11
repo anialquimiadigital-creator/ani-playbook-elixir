@@ -1,0 +1,478 @@
+<title>O Jeito Disney de Encantar os Clientes — abstração</title>
+<style>
+  :root {
+    --ground: #EDF0F6;
+    --paper: #F7F9FC;
+    --ink: #16203A;
+    --ink-soft: #46516E;
+    --line: #D3DAE8;
+    --navy: #0E1B33;
+    --navy-soft: #23345C;
+    --gold: #B8862A;
+    --gold-bright: #D0A43C;
+    --coral: #D9622E;
+    --focus: #23345C;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0B1426;
+      --paper: #111E38;
+      --ink: #E7ECF6;
+      --ink-soft: #A7B2CC;
+      --line: #26365A;
+      --navy: #060D1C;
+      --navy-soft: #C7D2EA;
+      --gold: #E4B84E;
+      --gold-bright: #F0C866;
+      --coral: #F08A54;
+      --focus: #E4B84E;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0B1426;
+    --paper: #111E38;
+    --ink: #E7ECF6;
+    --ink-soft: #A7B2CC;
+    --line: #26365A;
+    --navy: #060D1C;
+    --navy-soft: #C7D2EA;
+    --gold: #E4B84E;
+    --gold-bright: #F0C866;
+    --coral: #F08A54;
+    --focus: #E4B84E;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 18px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  .serif {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  }
+  .mono {
+    font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  }
+  .eyebrow {
+    font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 26px; height: 1px;
+    background: var(--gold);
+    flex: none;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    background:
+      radial-gradient(1200px 420px at 78% -8%, rgba(208,164,60,0.16), transparent 60%),
+      var(--navy);
+    color: #EAEEF8;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 3px solid var(--gold);
+  }
+  .hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1.4px);
+    background-size: 46px 46px;
+    opacity: 0.10;
+    pointer-events: none;
+  }
+  .hero .wrap { padding-top: 64px; padding-bottom: 58px; position: relative; z-index: 1; }
+  .hero .eyebrow { color: var(--gold-bright); }
+  .hero .eyebrow::before { background: var(--gold-bright); }
+  .hero h1 {
+    font-size: clamp(34px, 6.4vw, 58px);
+    line-height: 1.02;
+    margin: 0 0 20px;
+    font-weight: 600;
+    text-wrap: balance;
+    letter-spacing: -0.015em;
+  }
+  .hero h1 em { color: var(--coral); font-style: italic; }
+  .thesis {
+    font-size: clamp(18px, 2.4vw, 21px);
+    color: #C9D3E8;
+    max-width: 58ch;
+    margin: 0;
+  }
+  .thesis strong { color: var(--gold-bright); font-weight: 600; }
+  .credit {
+    margin-top: 28px;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: #8595B5;
+    display: flex; flex-wrap: wrap; gap: 8px 18px;
+  }
+  .credit b { color: #C9D3E8; font-weight: 600; }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 52px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  h2.serif {
+    font-size: clamp(26px, 4.2vw, 36px);
+    line-height: 1.1;
+    margin: 0 0 8px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .lede { color: var(--ink-soft); margin: 0 0 26px; max-width: 62ch; }
+  p { margin: 0 0 18px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); }
+  em.term { font-style: normal; color: var(--coral); font-weight: 600; }
+
+  .callout {
+    border-left: 3px solid var(--gold);
+    background: var(--paper);
+    padding: 18px 22px;
+    border-radius: 0 8px 8px 0;
+    margin: 26px 0;
+    font-family: "Iowan Old Style", Palatino, Georgia, serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .callout small { display:block; margin-top:10px; font-family: ui-sans-serif, system-ui, sans-serif; font-size:13px; color: var(--ink-soft); font-style: normal;}
+
+  /* vocabulary chips */
+  .vocab { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 0; }
+  .vocab .chip {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 15px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .vocab .chip b { color: var(--coral); }
+
+  /* ---------- COMPASS ---------- */
+  .compass-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 280px) 1fr;
+    gap: 34px;
+    align-items: center;
+  }
+  @media (max-width: 620px) { .compass-grid { grid-template-columns: 1fr; } }
+  .compass-svg { width: 100%; height: auto; display: block; }
+  .compass-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  .compass-legend li { padding-left: 2px; }
+  .compass-legend .k {
+    font-family: ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .compass-legend .t { font-weight: 600; font-size: 17px; }
+  .compass-legend .d { color: var(--ink-soft); font-size: 15px; }
+
+  /* two-col data */
+  .data-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 22px 0; }
+  @media (max-width: 620px) { .data-cols { grid-template-columns: 1fr; } }
+  .data-card { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+  .data-card h4 { margin: 0 0 8px; font-size: 15px; letter-spacing: 0.02em; }
+  .data-card h4 span { font-family: ui-monospace, monospace; color: var(--gold); font-size: 12px; }
+  .data-card p { font-size: 15px; color: var(--ink-soft); margin: 0; }
+
+  /* ---------- PRIORITY LADDER ---------- */
+  .ladder { display: grid; gap: 10px; margin: 24px 0 18px; }
+  .rung {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    align-items: stretch;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--paper);
+  }
+  .rung .num {
+    background: var(--navy);
+    color: var(--gold-bright);
+    font-family: ui-monospace, monospace;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600;
+  }
+  .rung .body { padding: 14px 18px; }
+  .rung .body b { font-size: 17px; }
+  .rung .body span { display: block; color: var(--ink-soft); font-size: 15px; margin-top: 2px; }
+  .rung:nth-child(1) .num { background: #7A1E1E; color: #FFD9D0; }
+  .priority-note {
+    font-size: 15px; color: var(--ink-soft);
+    background: var(--paper); border: 1px dashed var(--line);
+    border-radius: 8px; padding: 12px 16px;
+  }
+  .priority-note b { color: var(--coral); }
+
+  /* ---------- LISTS ---------- */
+  ol.clean, ul.clean { margin: 20px 0; padding: 0; list-style: none; display: grid; gap: 12px; counter-reset: c; }
+  ol.clean li, ul.clean li {
+    position: relative;
+    padding-left: 40px;
+    line-height: 1.5;
+  }
+  ol.clean li { counter-increment: c; }
+  ol.clean li::before {
+    content: counter(c);
+    position: absolute; left: 0; top: 1px;
+    width: 26px; height: 26px;
+    background: var(--navy); color: var(--gold-bright);
+    border-radius: 7px;
+    font-family: ui-monospace, monospace; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  ul.clean li::before {
+    content: ""; position: absolute; left: 8px; top: 11px;
+    width: 8px; height: 8px; background: var(--coral); border-radius: 50%;
+  }
+  ol.clean li b, ul.clean li b { color: var(--ink); }
+
+  /* behaviors inline list */
+  .behaviors { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; margin: 20px 0; }
+  @media (max-width: 620px) { .behaviors { grid-template-columns: 1fr; } }
+  .behaviors div { padding-left: 22px; position: relative; font-size: 16px; }
+  .behaviors div::before { content: "✦"; position: absolute; left: 0; color: var(--gold); font-size: 13px; top: 3px; }
+
+  /* ---------- INTEGRATION DIAGRAM ---------- */
+  .diagram { margin: 26px 0; }
+  .diagram svg { width: 100%; height: auto; display: block; }
+
+  /* ---------- ANi APPLICATION ---------- */
+  .ani { background: var(--navy); color: #EAEEF8; border-bottom: none; }
+  .ani .eyebrow { color: var(--gold-bright); }
+  .ani .eyebrow::before { background: var(--gold-bright); }
+  .ani h2 { color: #FFFFFF; }
+  .ani .lede { color: #C1CBE0; }
+  .ani .steps { display: grid; gap: 12px; margin: 26px 0 0; padding: 0; list-style: none; counter-reset: s; }
+  .ani .steps li {
+    counter-increment: s;
+    display: grid; grid-template-columns: 40px 1fr; gap: 16px; align-items: baseline;
+    padding: 16px 0; border-top: 1px solid rgba(255,255,255,0.10);
+  }
+  .ani .steps li::before {
+    content: counter(s, decimal-leading-zero);
+    font-family: ui-monospace, monospace; color: var(--gold-bright); font-size: 14px;
+  }
+  .ani .steps b { color: #FFFFFF; }
+  .ani .steps span { color: #C1CBE0; }
+
+  footer { padding: 34px 0 46px; }
+  .sources { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+  .sources b { color: var(--ink); }
+  .disclaimer {
+    margin-top: 18px; font-size: 13px; color: var(--ink-soft);
+    border-top: 1px solid var(--line); padding-top: 16px; font-style: italic;
+  }
+
+  a { color: var(--coral); }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 3px; }
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Disney Institute · Abstração de conhecimento</p>
+    <h1 class="serif">O Jeito Disney de <em>Encantar</em> os Clientes</h1>
+    <p class="thesis">Encantamento não é sorte nem talento inato — é <strong>método replicável</strong>. O que o cliente vê é magia; o que a empresa faz nos bastidores é a execução disciplinada de um sistema.</p>
+    <div class="credit">
+      <span><b>Fonte</b> · livro do Disney Institute (Benvirá)</span>
+      <span><b>Estrutura</b> · 6 partes</span>
+      <span><b>Uso</b> · referência ANi | Alquimia Digital</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <p class="eyebrow">Parte 1 · O princípio</p>
+    <h2 class="serif">A mágica na prática</h2>
+    <p class="lede">Em um número de mágica há duas magias: a que a plateia vê (o encantamento) e a que o mágico executa (o truque ensaiado). Um negócio-espetáculo precisa dominar a segunda para entregar a primeira.</p>
+    <p><strong>Encantar = primeiro satisfazer, depois exceder</strong> as expectativas. E você não pode exceder aquilo que não conhece — por isso todo o método começa entendendo o cliente. O tema-guia da Disney: <em class="term">"Criar felicidade para pessoas de todas as idades, em toda parte."</em></p>
+    <div class="callout serif">
+      A linguagem molda a cultura. Na Disney, o vocabulário não é enfeite — é operação.
+    </div>
+    <div class="vocab">
+      <span class="chip">cliente → <b>convidado</b></span>
+      <span class="chip">funcionário → <b>membro do elenco</b></span>
+      <span class="chip">interação → <b>espetáculo</b></span>
+      <span class="chip">bastidores → <b>backstage</b></span>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Parte 2 · Entender o cliente</p>
+    <h2 class="serif">Guestologia — a ciência de estudar o convidado</h2>
+    <p class="lede">Neologismo de Walt Disney (de <em>guest</em>, convidado): validar ideias direto com o público. "Você não constrói nada sozinho. Você descobre o que as pessoas querem e constrói para elas."</p>
+
+    <div class="data-cols">
+      <div class="data-card">
+        <h4><span>01</span> &nbsp;Dado demográfico</h4>
+        <p>Quem é o cliente: origem, idade, renda, cultura, classe. Define <em>como</em> atender e como mirar o marketing.</p>
+      </div>
+      <div class="data-card">
+        <h4><span>02</span> &nbsp;Dado psicográfico</h4>
+        <p>O que se passa na cabeça dele: o que precisa, quer, pensa e sente. É aqui que mora o encantamento.</p>
+      </div>
+    </div>
+
+    <div class="compass-grid">
+      <svg class="compass-svg" viewBox="0 0 240 240" role="img" aria-label="Bússola da Guestologia com quatro pontos: Necessidades ao norte, Desejos ao sul, Estereótipos a leste, Emoções a oeste">
+        <circle cx="120" cy="120" r="112" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+        <circle cx="120" cy="120" r="84" fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 5"/>
+        <!-- star / needle -->
+        <polygon points="120,26 132,120 120,214 108,120" fill="var(--gold)" opacity="0.9"/>
+        <polygon points="26,120 120,108 214,120 120,132" fill="var(--coral)" opacity="0.75"/>
+        <circle cx="120" cy="120" r="9" fill="var(--navy)" stroke="var(--gold-bright)" stroke-width="2"/>
+        <!-- labels -->
+        <text x="120" y="18" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="var(--ink)" font-weight="700">N · NECESSIDADES</text>
+        <text x="120" y="232" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="var(--ink)" font-weight="700">S · DESEJOS</text>
+        <text x="236" y="124" text-anchor="end" font-family="ui-monospace, monospace" font-size="11" fill="var(--ink)" font-weight="700">L</text>
+        <text x="4" y="124" text-anchor="start" font-family="ui-monospace, monospace" font-size="11" fill="var(--ink)" font-weight="700">O</text>
+      </svg>
+      <ul class="compass-legend">
+        <li><div class="k">Norte</div><div class="t">Necessidades</div><div class="d">O que o cliente precisa — o funcional, o óbvio.</div></li>
+        <li><div class="k">Sul</div><div class="t">Desejos</div><div class="d">O propósito por trás da necessidade — o que ele realmente espera.</div></li>
+        <li><div class="k">Leste</div><div class="t">Estereótipos</div><div class="d">O que ele pré-julga do negócio antes de te conhecer.</div></li>
+        <li><div class="k">Oeste</div><div class="t">Emoções</div><div class="d">Como ele vai se sentir em cada contato com você.</div></li>
+      </ul>
+    </div>
+
+    <p><strong>Como coletar:</strong> postos de escuta, cartões de comentário, funcionários treinados para observar e reportar, clientes ocultos. <strong>Regra de ouro:</strong> colete em <em class="term">vários momentos</em> da jornada, não só no fim.</p>
+
+    <h3 class="serif" style="font-size:22px; margin:34px 0 4px;">Os 4 Padrões de Atendimento</h3>
+    <p class="priority-note" style="margin-bottom:16px;">A ordem é uma <b>regra de decisão</b>: em conflito, o de cima sempre vence o de baixo. Nunca sacrifique um padrão superior por um inferior.</p>
+    <div class="ladder">
+      <div class="rung"><div class="num">1</div><div class="body"><b>Segurança</b><span>Nada compromete a segurança ou a confiança. Vem sempre primeiro.</span></div></div>
+      <div class="rung"><div class="num">2</div><div class="body"><b>Cortesia</b><span>Tratar cada um como ele quer ser tratado — respeito a emoções, habilidades e culturas.</span></div></div>
+      <div class="rung"><div class="num">3</div><div class="body"><b>Espetáculo</b><span>Entretenimento excepcional e ininterrupto; imersão sem quebras.</span></div></div>
+      <div class="rung"><div class="num">4</div><div class="body"><b>Eficiência</b><span>Uso inteligente do tempo e dos recursos.</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Parte 3 · Sistema de entrega I</p>
+    <h2 class="serif">A magia do elenco</h2>
+    <p class="lede">A magia externa só existe se o time viver a magia primeiro. Funcionário encantado encanta.</p>
+    <p>As <strong>primeiras impressões</strong> são fortes e duradouras: o novo contratado precisa <em>sentir</em> a magia antes de criá-la. O programa <em class="term">Traditions</em> transmite a cultura — linguagem, símbolos, valores, comportamentos e segurança — <strong>antes</strong> da papelada. Cultura vem antes de burocracia.</p>
+    <h3 class="serif" style="font-size:20px; margin:28px 0 4px;">Comportamentos que geram cortesia</h3>
+    <div class="behaviors">
+      <div>Contato visual e sorriso sincero</div>
+      <div>Cumprimentar e dar boas-vindas</div>
+      <div>Resolver a falha assim que surge</div>
+      <div>Linguagem corporal apropriada</div>
+      <div>Preservar a experiência mágica</div>
+      <div>Agradecer a todo convidado</div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Parte 4 · Sistema de entrega II</p>
+    <h2 class="serif">A magia do cenário</h2>
+    <p class="lede">Tudo — animado ou inanimado — comunica e influencia. O ambiente deve envolver os cinco sentidos.</p>
+    <p style="color:var(--ink-soft); font-size:15px; margin-bottom:6px;">Os 10 Mandamentos do Mickey — checklist de design de experiência:</p>
+    <ol class="clean">
+      <li><b>Conheça o seu público.</b></li>
+      <li><b>Vista a pele do convidado</b> — avalie o cenário pelo ponto de vista dele.</li>
+      <li><b>Organize o fluxo</b> de pessoas e de ideias.</li>
+      <li><b>Crie um "winie"</b> — um ímã visual que atrai e orienta.</li>
+      <li><b>Use linguagem visual</b> — comunique sem depender de texto.</li>
+      <li><b>Evite excessos, crie surpresas</b> — não bombardeie de informação.</li>
+      <li><b>Conte uma história por vez</b> — um cenário por grande ideia.</li>
+      <li><b>Evite contradições</b> — cada detalhe sustenta a identidade.</li>
+      <li><b>Cada grama de atenção dá uma tonelada de prazer</b> — cenário sensorial e interativo.</li>
+      <li><b>Continue assim</b> — manutenção constante, nunca se acomode.</li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="eyebrow">Parte 5 · Sistema de entrega III</p>
+    <h2 class="serif">A magia do processo</h2>
+    <p class="lede">Processos existem para dissolver o atrito antes que ele vire consciência.</p>
+    <p>Preste atenção nas <em class="term">frases de combustão</em> — o que o cliente diz quando algo trava ("tá demorando demais…", "não achei onde…"). Diante delas, o elenco precisa <strong>resolver</strong> ou <strong>distrair/entreter</strong> — fazer o cliente não sentir o problema (ex.: manter as filas em movimento e com atrações). Um bom processo faz o atrito <strong>nem chegar à cabeça</strong> do convidado.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Parte 6 · A chave de tudo</p>
+    <h2 class="serif">A magia da integração</h2>
+    <p class="lede">Os três sistemas de entrega precisam estar alinhados entre si e todos apontando para os mesmos padrões. Um sistema desalinhado quebra a magia dos outros.</p>
+    <div class="diagram">
+      <svg viewBox="0 0 640 300" role="img" aria-label="Diagrama de integração: guestologia alimenta tema e padrões, que orientam elenco, cenário e processo, integrados numa experiência que encanta">
+        <defs>
+          <marker id="ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="var(--navy-soft)"/>
+          </marker>
+        </defs>
+        <!-- top -->
+        <rect x="200" y="12" width="240" height="42" rx="9" fill="var(--paper)" stroke="var(--gold)" stroke-width="1.5"/>
+        <text x="320" y="38" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="700" fill="var(--ink)">GUESTOLOGIA</text>
+        <!-- theme+keys -->
+        <rect x="120" y="82" width="400" height="46" rx="9" fill="var(--navy)"/>
+        <text x="320" y="103" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700" fill="#F0C866">TEMA + 4 PADRÕES</text>
+        <text x="320" y="120" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#AEBBDA">Segurança › Cortesia › Espetáculo › Eficiência</text>
+        <!-- three systems -->
+        <rect x="40" y="164" width="160" height="46" rx="9" fill="var(--paper)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="120" y="192" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="700" fill="var(--ink)">ELENCO</text>
+        <rect x="240" y="164" width="160" height="46" rx="9" fill="var(--paper)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="320" y="192" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="700" fill="var(--ink)">CENÁRIO</text>
+        <rect x="440" y="164" width="160" height="46" rx="9" fill="var(--paper)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="520" y="192" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="700" fill="var(--ink)">PROCESSO</text>
+        <!-- result -->
+        <rect x="190" y="248" width="260" height="44" rx="22" fill="var(--coral)"/>
+        <text x="320" y="275" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="700" fill="#2A0E04">experiência que ENCANTA</text>
+        <!-- connectors -->
+        <line x1="320" y1="54" x2="320" y2="80" stroke="var(--navy-soft)" stroke-width="1.6" marker-end="url(#ar)"/>
+        <line x1="320" y1="128" x2="320" y2="150" stroke="var(--navy-soft)" stroke-width="1.6"/>
+        <line x1="120" y1="150" x2="120" y2="162" stroke="var(--navy-soft)" stroke-width="1.6" marker-end="url(#ar)"/>
+        <line x1="520" y1="150" x2="520" y2="162" stroke="var(--navy-soft)" stroke-width="1.6" marker-end="url(#ar)"/>
+        <line x1="120" y1="150" x2="520" y2="150" stroke="var(--navy-soft)" stroke-width="1.6"/>
+        <line x1="320" y1="150" x2="320" y2="162" stroke="var(--navy-soft)" stroke-width="1.6" marker-end="url(#ar)"/>
+        <line x1="120" y1="210" x2="120" y2="234" stroke="var(--navy-soft)" stroke-width="1.6"/>
+        <line x1="520" y1="210" x2="520" y2="234" stroke="var(--navy-soft)" stroke-width="1.6"/>
+        <line x1="120" y1="234" x2="520" y2="234" stroke="var(--navy-soft)" stroke-width="1.6"/>
+        <line x1="320" y1="210" x2="320" y2="246" stroke="var(--navy-soft)" stroke-width="1.6" marker-end="url(#ar)"/>
+      </svg>
+    </div>
+    <p>Integração é identificar <strong>quais detalhes tratar</strong> e <strong>quais expectativas superar</strong>, reunindo elenco, cenário e processo numa experiência única e completa.</p>
+  </section>
+
+  <section class="ani">
+    <p class="eyebrow">Tradução prática</p>
+    <h2 class="serif">Como aplicar na ANi</h2>
+    <p class="lede">O mesmo motor, adaptado ao contexto de colaboradores digitais e experiência de marca.</p>
+    <ol class="steps">
+      <li><span><b>Guestologia da audiência.</b> Mapear necessidade / desejo / estereótipo / emoção do público antes de criar oferta ou conteúdo.</span></li>
+      <li><span><b>Definir o Tema da ANi.</b> Uma frase-norte da experiência que a marca entrega.</span></li>
+      <li><span><b>Os 4 padrões priorizados.</b> O que nunca se sacrifica no atendimento, na DM ou na entrega.</span></li>
+      <li><span><b>Elenco.</b> SDRs, agentes e fundadora vivendo a experiência antes de vendê-la.</span></li>
+      <li><span><b>Cenário.</b> Perfil, landing e materiais como ambiente imersivo — os 10 Mandamentos viram checklist.</span></li>
+      <li><span><b>Processo.</b> Caçar as "frases de combustão" nas conversas de venda e eliminar o atrito.</span></li>
+      <li><span><b>Integração.</b> Tudo apontando para o mesmo tema.</span></li>
+    </ol>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p class="sources"><b>Fontes consultadas:</b> 12min (resumo do livro) · Facto Agência (as 6 partes) · Lederman Consulting (Guestology) · HubSpot (Disney's Four Keys) · Goodreads (ficha da obra).</p>
+  <p class="disclaimer">Abstração do conhecimento da obra a partir de fontes que a descrevem — não uma reprodução do texto integral, protegido por direitos autorais. Material de referência interno · ANi | Alquimia Digital.</p>
+</footer>
